@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Licence;
 use App\Models\Product;
-
+use Illuminate\Support\Str;
 
 class LicenceController extends Controller
 {
@@ -80,7 +80,7 @@ class LicenceController extends Controller
         $data = new Licence;
         $data->product_id = $request->product_id;
         $data->user_id = $request->user_id;
-        $data->licence = time();
+        $data->licence = Str::random(15);
         $data->dns = $request->dns;
         $data->due = date('Y-m-d',strtotime($request->due));
         $data->save();
@@ -103,9 +103,8 @@ class LicenceController extends Controller
         $data = Product::find($request->id);
         $data->product_id = $request->product_id;
         $data->user_id = $request->user_id;
-        $data->token = time();
         $data->dns = $request->dns;
-        $data->due = $request->due;
+        $data->due = date('Y-m-d',strtotime($request->due));
         $data->save();
 
         $response = [
