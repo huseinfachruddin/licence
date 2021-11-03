@@ -22,7 +22,7 @@ class LicenceController extends Controller
         if (empty($product)) {
             $response = [
                 'success'   => false,
-                'errors' => ['product'=> 'product tidak ditemukan']
+                'errors' => ['check'=> 'product tidak ditemukan']
             ];
             return response($response,422);
         }
@@ -44,6 +44,7 @@ class LicenceController extends Controller
         $response = [
             'success'   => true,
             'licence'   => $data,
+            'host'   => $dns,
         ];
         return response($response,200);
     }
