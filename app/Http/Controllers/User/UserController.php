@@ -40,10 +40,10 @@ class UserController extends Controller
                 $data->roles()->detach();
                 if (is_array($request->role)) {
                     foreach ($request->role as $key => $value) {
-                        $data->syncRoles($value['name']);
+                        $data->assignRole($value['name']);
                     }
                 }else{
-                    $data->syncRoles('admin');
+                    $data->assignRole('admin');
                 }
             }
         $data->save();
