@@ -82,7 +82,7 @@ class LicenceController extends Controller
         $data->user_id = $request->user_id;
         $data->licence = time();
         $data->dns = $request->dns;
-        $data->due = $request->due;
+        $data->due = date('Y-m-d',strtostr($request->due));
         $data->save();
 
         $response = [
