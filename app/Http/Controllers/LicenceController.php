@@ -100,7 +100,7 @@ class LicenceController extends Controller
             'due'  =>'nullable',
         ]);
 
-        $data = Product::find($request->id);
+        $data = Licence::find($request->id);
         $data->product_id = $request->product_id;
         $data->user_id = $request->user_id;
         $data->dns = $request->dns;
