@@ -40,10 +40,12 @@ class UserController extends Controller
                 $data->roles()->detach();
                 if (is_array($request->role)) {
                     foreach ($request->role as $key => $value) {
-                        $data->assignRole($value['name']);
+                        $user = User::where('id',$request->id)->first();
+                        $user = $user->syncRoles($request->role);
                     }
                 }else{
-                    $data->assignRole('admin');
+                    $user = User::where('id',$request->id)->first();
+                    $user = $user->syncRoles($request->role);
                 }
             }
         $data->save();
