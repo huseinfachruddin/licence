@@ -40,7 +40,7 @@ class UserController extends Controller
                 $data->roles()->detach();
                 if (is_array($request->role)) {
                     foreach ($request->role as $key => $value) {
-                        $user->syncRoles($value['name']);
+                        $data->syncRoles($value['name']);
                     }
                 }else{
                     $data->syncRoles($request->role);
