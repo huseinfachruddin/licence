@@ -28,7 +28,7 @@ class ProductController extends Controller
 
     public function createProduct(Request $request){
         $request->validate([
-            'code'  =>'required',
+            'code'  =>'required|unique:products,code',
             'name'  =>'required',
             'desc'  =>'nullable',
 
@@ -47,13 +47,14 @@ class ProductController extends Controller
     }
 
     public function editProduct(Request $request){
+        $data = Product::find($request->id);
         $request->validate([
-            'code'  =>'required',
+            'code'  =>'required|unique:products,code,'.$data->id,
             'name'  =>'required',
             'desc'  =>'nullable',
         ]);
         
-        $data = Role::find($request->id);
+        $data = Product::find($request->id);
         $data->code = $request->code;
         $data->name = $request->name;
         $data->desc = $request->desc;

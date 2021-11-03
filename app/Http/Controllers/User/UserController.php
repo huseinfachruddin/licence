@@ -58,6 +58,7 @@ class UserController extends Controller
 
     public function deleteUser(Request $request){
         $data = User::find($request->id);
+        
         $data->delete();
         $response = [
             'success'   => true,
