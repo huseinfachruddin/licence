@@ -42,8 +42,8 @@ class ProfileController extends Controller
     public function passwordProfile(Request $request){
         $request->validate([
             'oldPassword'  =>'required|min:6',
-            'newPassword'  =>'required|min:6',
-            'rePassword'  =>'required|min:6',
+            'password'  =>'required|min:6',
+            'rePassword'  =>'required|min:6|same:password',
         ]);
         $user = User::where('id', $request->user()->id)->first();
             if (!$user || !Hash::check($request->oldPassword, $user->password)) {
