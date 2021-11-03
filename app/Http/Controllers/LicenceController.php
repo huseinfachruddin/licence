@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Licence;
+use App\Models\Product;
+
 
 class LicenceController extends Controller
 {
@@ -75,7 +77,7 @@ class LicenceController extends Controller
 
         ]);
 
-        $data = new Product;
+        $data = new Licence;
         $data->product_id = $request->product_id;
         $data->user_id = $request->user_id;
         $data->token = time();
