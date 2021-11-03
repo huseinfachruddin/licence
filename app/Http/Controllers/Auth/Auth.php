@@ -44,7 +44,7 @@ class Auth extends Controller
             'password' => 'required',
         ]);
 
-        $user= User::where('email', $request->name)->first();
+        $user= User::where('name', $request->name)->first();
         
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response([
