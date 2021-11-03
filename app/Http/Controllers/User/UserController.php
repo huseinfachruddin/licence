@@ -43,7 +43,7 @@ class UserController extends Controller
                         $data->syncRoles($value['name']);
                     }
                 }else{
-                    $data->syncRoles($request->role);
+                    $data->syncRoles('admin');
                 }
             }
         $data->save();
