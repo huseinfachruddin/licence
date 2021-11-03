@@ -60,7 +60,7 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     
     // Profile
     Route::get('/profile',[ProfileController::class,'getProfile']);
-    Route::put('/profile',[ProfileController::class,'editProfile']);
+    Route::put('/profile/{id}',[ProfileController::class,'editProfile']);
     Route::put('/profile/password',[ProfileController::class,'passwordProfile']);
     // User
     Route::get('/user',[UserController::class,'getUser']);
