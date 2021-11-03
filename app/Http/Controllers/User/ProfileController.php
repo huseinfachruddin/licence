@@ -21,12 +21,12 @@ class ProfileController extends Controller
     }
 
     public function editProfile(Request $request){
+        $data = User::find($request->user()->id);
         $request->validate([
             'name'  =>'required|unique:users,name,'.$data->id,
             'email' =>'required|email|unique:users,email,'.$data->id,
             'phone' =>'nullable',
         ]);
-        $data = User::find($request->user()->id);
         $data->name = $request->name;
         $data->email = $request->email;
         $data->phone = $request->phone;
