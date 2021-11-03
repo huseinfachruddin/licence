@@ -26,7 +26,7 @@ class ProfileController extends Controller
             'email' =>'required|email|unique:users,email,'.$data->id,
             'phone' =>'nullable',
         ]);
-        $data = User::where('id',$request->user()->id)->first();
+        $data = User::find($request->user()->id);
         $data->name = $request->name;
         $data->email = $request->email;
         $data->phone = $request->phone;
