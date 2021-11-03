@@ -7,6 +7,45 @@ use App\Models\Licence;
 
 class LicenceController extends Controller
 {
+    public function checkLicence(Request $request){
+        $request->validate([
+            'product_code'  =>'required',
+            'licence'  =>'required',
+        ]);
+        $code=$request->code;
+        $licence=$request->licence;
+        $dns=$request->server('HTTP_ORIGIN');
+
+        $product=Product::where('code',$code)->first();
+        if (empty($product)) {
+            $response = [
+                'success'   => false,
+                'errors' => ['product'=> 'product tidak ditemukan']
+            ];
+            return response($response,422);
+        }
+
+        if (empty($dns)) {
+            $data =Licence::where('licence',$licence)->where('product_id',$product->id)->first();
+        }else{
+            $data =Licence::where('dns',$dns)->where('licence',$licence)->where('product_id',$product->id)->first();
+        }
+
+        if (empty($data)) {
+            $response = [
+                'success'   => false,
+                'errors' => ['check'=> 'licence tidak ditemukan']
+            ];
+            return response($response,401);
+        }
+
+        $response = [
+            'success'   => true,
+            'licence'   => $data,
+        ];
+        return response($response,200);
+    }
+
     public function getLicence(Request $request){
         $data = Licence::with('product','user')->paginate(10);
 

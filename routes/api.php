@@ -35,6 +35,9 @@ return 'ok';
 
 });
 
+// CHECK LICENCE 
+Route::match(['get','post'],'/checking', [LicenceController::class,'checkLicence']);
+
 //Licence
 Route::get('/licence',[LicenceController::class,'getLicence']);
 Route::get('/licence/{id}',[LicenceController::class,'detailLicence']);
