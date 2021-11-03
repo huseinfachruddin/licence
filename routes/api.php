@@ -2,15 +2,17 @@
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Cash;
-use App\Models\Cashintrans;
 
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\RoleController;
+use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Auth\Auth;
-use App\Http\Controllers\CashController;
+use App\Http\Controllers\LicenceController;
+use App\Http\Controllers\ProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,20 +35,31 @@ return 'ok';
 
 });
 
-// Route::get('/cash/out',[CashController::class,'Cashout']);
-// Route::get('/cash/out/total',[CashController::class,'CashOutTotal']);
-// Route::get('/cash/{id}/detail',[CashController::class,'CashOutdetail']);
-// Route::post('/cash/out/create',[CashController::class,'CashOutCreate']);
+//Licence
+Route::get('/licence',[LicenceController::class,'getLicence']);
+Route::get('/licence/{id}',[LicenceController::class,'detailLicence']);
+Route::post('/licence',[LicenceController::class,'createLicence']);
+Route::put('/licence/{id}',[LicenceController::class,'editLicence']);
+Route::delete('/licence/{id}',[LicenceController::class,'deleteLicence']);
 
-// Route::get('/cash',[CashController::class,'Cash']);
+//Product
+Route::get('/product',[ProductController::class,'getProduct']);
+Route::get('/product/{id}',[ProductController::class,'detailProduct']);
+Route::post('/product',[ProductController::class,'createProduct']);
+Route::put('/product/{id}',[ProductController::class,'editProduct']);
+Route::delete('/product/{id}',[ProductController::class,'deleteProduct']);
 
-// Route::get('/cash/in',[CashController::class,'Cashintrans']);
-// Route::get('/cash/in/total',[CashController::class,'CashinTotal']);
-// Route::get('/cash/{id}/detail',[CashController::class,'Cashdetail']);
-// Route::post('/cash/In/create',[CashController::class,'CashInCreate']);
+// USER API
+Route::get('/user',[UserController::class,'getUser']);
+Route::get('/user/{id}',[UserController::class,'detailUser']);
+Route::put('/user/{id}',[UserController::class,'editUser']);
+Route::delete('/user/{id}',[UserController::class,'deleteUser']);
 
-
-
+Route::get('/role',[RoleController::class,'getRole']);
+Route::get('/role/{id}',[RoleController::class,'detailRole']);
+Route::post('/role',[RoleController::class,'createRole']);
+Route::put('/role/{id}',[RoleController::class,'editRole']);
+Route::delete('/role/{id}',[RoleController::class,'deleteRole']);
 
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);
@@ -54,17 +67,25 @@ Route::post('/login',[Auth::class,'login']);
 Route::group(['middleware'=>'auth:sanctum'],function(){ 
     Route::get('/logout',[Auth::class,'logout']);
 
-    Route::get('/profile',function(Request $request){
-        return $request->user();
-    });
+    // Profile
+    Route::get('/profile',[ProfileController::class,'getProfile']);
+    Route::put('/profile',[ProfileController::class,'editProfile']);
+    Route::put('/profile/password',[ProfileController::class,'passwordProfile']);
+    // User
+    Route::get('/user',[UserController::class,'getUser']);
+    Route::get('/user/{id}',[UserController::class,'detailUser']);
+    Route::put('/user/{id}',[UserController::class,'editUser']);
+    Route::delete('/user/{id}',[UserController::class,'deleteUser']);
+    // Role
+    Route::get('/role',[RoleController::class,'getRole']);
+    Route::get('/role/{id}',[RoleController::class,'detailRole']);
+    Route::post('/role',[RoleController::class,'createRole']);
+    Route::put('/role/{id}',[RoleController::class,'editRole']);
+    Route::delete('/role/{id}',[RoleController::class,'deleteRole']);
+
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/admin',function(Request $request){
             return 'Ok';
-        });
-    });
-    Route::group(['middleware' => ['role:admin']], function () {
-        Route::get('/users/admin',function(Request $request){
-            return $request->user();
         });
     });
 });

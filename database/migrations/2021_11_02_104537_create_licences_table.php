@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCashesTable extends Migration
+class CreateLicencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateCashesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Cashes', function (Blueprint $table) {
+        Schema::create('licences', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('desc');
-            $table->biginteger('total');
+            $table->biginteger('product_id')->nullable();
+            $table->biginteger('user_id')->nullable();
+            $table->string('dns')->nullable();
+            $table->string('licence')->nullable();
+            $table->date('due')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateCashesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cashes');
+        Schema::dropIfExists('licences');
     }
 }

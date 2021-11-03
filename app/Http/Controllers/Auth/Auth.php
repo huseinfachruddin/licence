@@ -14,8 +14,9 @@ class Auth extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name'  =>'required',
+            'name'  =>'required|unique:users,name',
             'email' =>'required|email|unique:users,email',
+            'phone' =>'required',
             'password'  =>'required|min:6',
             'rePassword'  =>'required|min:6|same:password',
         ]);
@@ -24,6 +25,7 @@ class Auth extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => bcrypt($request->password),
         ]);
 
@@ -38,16 +40,16 @@ class Auth extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'name' => 'required',
             'password' => 'required',
         ]);
 
-        $user= User::where('email', $request->email)->first();
+        $user= User::where('email', $request->name)->first();
         
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response([
                     'success'   => false,
-                    'errors' => ['auth'=> 'Incorrect email and password']
+                    'errors' => ['auth'=> 'Incorrect username and password']
                 ], 404);
             }
         
