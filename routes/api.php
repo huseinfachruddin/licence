@@ -26,12 +26,9 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::get('/test', function(){
-    // Role::create(['name' => 'admin']);
-    // User::find(1)->assignRole('admin');
-    $data = 'CIT'.rand().time();
-    // // $data = CashController::Cashdetail(1);
-    return $data;
-return 'ok';
+    $user = User::where('id','1')->first();
+    $user = $user->syncRoles('admin');
+return $user;
 
 });
 
