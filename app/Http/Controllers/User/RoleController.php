@@ -30,7 +30,7 @@ class RoleController extends Controller
 
     public function createRole(Request $request){
         $request->validate([
-            'name'  =>'required|unique:roles,name,',
+            'name'  =>'required|unique:roles,name',
         ]);
         $data = new Role;
         $data->name = $request->name;

@@ -13,13 +13,19 @@ use App\Models\Licence;
 class User extends Authenticatable
 {
     use HasFactory,Notifiable,HasRoles,HasApiTokens;
+    protected $guard_name = 'api';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['*'];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'phone',
+    ];
 
     /**
      * The attributes that should be hidden for arrays.

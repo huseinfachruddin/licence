@@ -28,8 +28,7 @@ use App\Http\Controllers\ProductController;
 Route::get('/test', function(){
     $user = User::where('id','1')->first();
     $user = $user->syncRoles('admin');
-return $user;
-
+    return $user;
 });
 
 // CHECK LICENCE 
