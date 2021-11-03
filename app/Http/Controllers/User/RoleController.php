@@ -34,6 +34,7 @@ class RoleController extends Controller
         ]);
         $data = new Role;
         $data->name = $request->name;
+        $data->guard_name = 'web';
         $data->save();
         
         $response = [
