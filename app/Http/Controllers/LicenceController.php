@@ -28,9 +28,9 @@ class LicenceController extends Controller
         }
 
         if (empty($dns)) {
-            $data =Licence::where('licence',$licence)->where('product_id',$product->id)->first();
+            $data =Licence::with('product','user')->where('licence',$licence)->where('product_id',$product->id)->first();
         }else{
-            $data =Licence::where('dns',$dns)->where('licence',$licence)->where('product_id',$product->id)->first();
+            $data =Licence::with('product','user')->where('dns',$dns)->where('licence',$licence)->where('product_id',$product->id)->first();
         }
 
         if (empty($data)) {
