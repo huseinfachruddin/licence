@@ -55,13 +55,13 @@ Route::delete('/product/{id}',[ProductController::class,'deleteProduct']);
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);
 
-// Profile
-Route::get('/profile',[ProfileController::class,'getProfile']);
-Route::put('/profile',[ProfileController::class,'editProfile']);
-Route::put('/profile/password',[ProfileController::class,'passwordProfile']);
 Route::group(['middleware'=>'auth:sanctum'],function(){ 
     Route::get('/logout',[Auth::class,'logout']);
-
+    
+    // Profile
+    Route::get('/profile',[ProfileController::class,'getProfile']);
+    Route::put('/profile',[ProfileController::class,'editProfile']);
+    Route::put('/profile/password',[ProfileController::class,'passwordProfile']);
     // User
     Route::get('/user',[UserController::class,'getUser']);
     Route::get('/user/{id}',[UserController::class,'detailUser']);
