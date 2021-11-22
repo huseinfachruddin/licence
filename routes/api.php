@@ -53,16 +53,16 @@ Route::put('/product/{id}',[ProductController::class,'editProduct']);
 Route::delete('/product/{id}',[ProductController::class,'deleteProduct']);
 
 // USER API
-Route::get('/user',[UserController::class,'getUser']);
-Route::get('/user/{id}',[UserController::class,'detailUser']);
-Route::put('/user/{id}',[UserController::class,'editUser']);
-Route::delete('/user/{id}',[UserController::class,'deleteUser']);
+// Route::get('/user',[UserController::class,'getUser']);
+// Route::get('/user/{id}',[UserController::class,'detailUser']);
+// Route::put('/user/{id}',[UserController::class,'editUser']);
+// Route::delete('/user/{id}',[UserController::class,'deleteUser']);
 
-Route::get('/role',[RoleController::class,'getRole']);
-Route::get('/role/{id}',[RoleController::class,'detailRole']);
-Route::post('/role',[RoleController::class,'createRole']);
-Route::put('/role/{id}',[RoleController::class,'editRole']);
-Route::delete('/role/{id}',[RoleController::class,'deleteRole']);
+// Route::get('/role',[RoleController::class,'getRole']);
+// Route::get('/role/{id}',[RoleController::class,'detailRole']);
+// Route::post('/role',[RoleController::class,'createRole']);
+// Route::put('/role/{id}',[RoleController::class,'editRole']);
+// Route::delete('/role/{id}',[RoleController::class,'deleteRole']);
 
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);

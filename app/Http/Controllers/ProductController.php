@@ -53,7 +53,7 @@ class ProductController extends Controller
             'desc'  =>'nullable',
         ]);
         
-        $data = Role::find($request->id);
+        $data = Product::find($request->id);
         $data->code = $request->code;
         $data->name = $request->name;
         $data->desc = $request->desc;
