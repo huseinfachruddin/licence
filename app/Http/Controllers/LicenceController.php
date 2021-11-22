@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Licence;
+use App\Models\Product;
 
 class LicenceController extends Controller
 {
@@ -45,7 +46,7 @@ class LicenceController extends Controller
         ];
         return response($response,200);
     }
-    
+
     public function getLicence(Request $request){
         $data = Licence::with('product','user')->paginate(10);
 
