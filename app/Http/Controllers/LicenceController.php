@@ -45,7 +45,7 @@ class LicenceController extends Controller
         ];
         return response($response,200);
     }
-
+    
     public function getLicence(Request $request){
         $data = Licence::with('product','user')->paginate(10);
 
