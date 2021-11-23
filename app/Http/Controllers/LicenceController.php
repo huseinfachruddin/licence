@@ -14,7 +14,7 @@ class LicenceController extends Controller
             'product_code'  =>'required',
             'licence'  =>'required',
         ]);
-        $code=$request->code;
+        $code=$request->product_code;
         $licence=$request->licence;
         $dns=$request->server('HTTP_ORIGIN');
 
@@ -117,7 +117,7 @@ class LicenceController extends Controller
 
     public function deleteLicence(Request $request){
 
-        $data = Product::find($request->id);
+        $data = Licence::find($request->id);
         $data->delete();
 
         $response = [

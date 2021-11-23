@@ -48,6 +48,21 @@ Route::post('/product',[ProductController::class,'createProduct']);
 Route::put('/product/{id}',[ProductController::class,'editProduct']);
 Route::delete('/product/{id}',[ProductController::class,'deleteProduct']);
 
+<<<<<<< HEAD
+=======
+// USER API
+// Route::get('/user',[UserController::class,'getUser']);
+// Route::get('/user/{id}',[UserController::class,'detailUser']);
+// Route::put('/user/{id}',[UserController::class,'editUser']);
+// Route::delete('/user/{id}',[UserController::class,'deleteUser']);
+
+// Route::get('/role',[RoleController::class,'getRole']);
+// Route::get('/role/{id}',[RoleController::class,'detailRole']);
+// Route::post('/role',[RoleController::class,'createRole']);
+// Route::put('/role/{id}',[RoleController::class,'editRole']);
+// Route::delete('/role/{id}',[RoleController::class,'deleteRole']);
+
+>>>>>>> d398652f1d9e7b6f5b9dc79b80b0fef80c4d94d9
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);
 
