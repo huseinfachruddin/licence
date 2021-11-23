@@ -48,8 +48,6 @@ Route::post('/product',[ProductController::class,'createProduct']);
 Route::put('/product/{id}',[ProductController::class,'editProduct']);
 Route::delete('/product/{id}',[ProductController::class,'deleteProduct']);
 
-<<<<<<< HEAD
-=======
 // USER API
 // Route::get('/user',[UserController::class,'getUser']);
 // Route::get('/user/{id}',[UserController::class,'detailUser']);
@@ -62,7 +60,6 @@ Route::delete('/product/{id}',[ProductController::class,'deleteProduct']);
 // Route::put('/role/{id}',[RoleController::class,'editRole']);
 // Route::delete('/role/{id}',[RoleController::class,'deleteRole']);
 
->>>>>>> d398652f1d9e7b6f5b9dc79b80b0fef80c4d94d9
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);
 
