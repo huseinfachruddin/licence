@@ -79,7 +79,7 @@ class LicenceController extends Controller
         $data = new Licence;
         $data->product_id = $request->product_id;
         $data->user_id = $request->user_id;
-        $data->token = time();
+        $data->licence = time();
         $data->dns = $request->dns;
         $data->due = $request->due;
         $data->save();
@@ -102,7 +102,7 @@ class LicenceController extends Controller
         $data = Licence::find($request->id);
         $data->product_id = $request->product_id;
         $data->user_id = $request->user_id;
-        $data->token = time();
+        $data->licence = time();
         $data->dns = $request->dns;
         $data->due = $request->due;
         $data->save();
