@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 class LicenceController extends Controller
 {
     public function checkLicence(Request $request){
+        dd($request);
         $request->validate([
             'product_code'  =>'required',
             'licence'  =>'required',
