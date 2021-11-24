@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 class LicenceController extends Controller
 {
     public function checkLicence(Request $request){
-        dd($request);
         $request->validate([
             'product_code'  =>'required',
             'licence'  =>'required',
@@ -27,19 +26,25 @@ class LicenceController extends Controller
             ];
             return response($response,422);
         }
+        $data =Licence::with('product','user')->where('licence',$licence)->where('product_id',$product->id)->first();
 
-        if (empty($dns)) {
-            $data =Licence::with('product','user')->where('licence',$licence)->where('product_id',$product->id)->first();
-        }else{
-            $data =Licence::with('product','user')->where('dns',$dns)->where('licence',$licence)->where('product_id',$product->id)->first();
-        }
-
-        if (empty($data)) {
+        if (empty($data) && $data->dns != $dns) {
             $response = [
                 'success'   => false,
                 'errors' => ['check'=> 'licence tidak ditemukan']
             ];
             return response($response,401);
+        }else{
+            if (empty($data->dns)) {
+                $data = Licence::find($data->id);
+                $data->dns=$dns;
+                $data->save();
+            }else{
+                    $data = Licence::find($data->id);
+                    $data->dns=$dns;
+                    $data->save();
+                
+            }
         }
 
         $response = [
@@ -74,7 +79,6 @@ class LicenceController extends Controller
         $request->validate([
             'product_id'  =>'required',
             'user_id'  =>'required',
-            'dns'  =>'nullable',
             'due'  =>'nullable',
 
         ]);
@@ -83,7 +87,6 @@ class LicenceController extends Controller
         $data->product_id = $request->product_id;
         $data->user_id = $request->user_id;
         $data->licence = Str::random(15);
-        $data->dns = $request->dns;
         $data->due = date('Y-m-d',strtotime($request->due));
         $data->save();
 
