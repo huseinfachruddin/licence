@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class LicenceController extends Controller
 {
     public function checkLicence(Request $request){
-        $data = sheel_exec('getmac');
+        $data = shell_exec('getmac');
         dd($data);
         $request->validate([
             'product_code'  =>'required',
