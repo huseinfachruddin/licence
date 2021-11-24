@@ -46,6 +46,7 @@ class LicenceController extends Controller
                         'success'   => false,
                         'errors' => ['check'=> 'licence DNS berbeda']
                     ];
+                    return response($response,200);
                 }else{
                     $data = Licence::find($data->id);
                     $data->dns=$dns;
