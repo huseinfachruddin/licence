@@ -28,7 +28,8 @@ class LicenceController extends Controller
         }
         $data =Licence::with('product','user')->where('licence',$licence)->where('product_id',$product->id)->first();
 
-        if (empty($data) && $data->dns != $dns) {
+
+        if (empty($data)) {
             $response = [
                 'success'   => false,
                 'errors' => ['check'=> 'licence tidak ditemukan']
@@ -40,10 +41,17 @@ class LicenceController extends Controller
                 $data->dns=$dns;
                 $data->save();
             }else{
+                if ($data->dns != $dns) {
+                    $response = [
+                        'success'   => false,
+                        'errors' => ['check'=> 'licence DNS berbeda']
+                    ];
+                }else{
                     $data = Licence::find($data->id);
                     $data->dns=$dns;
                     $data->save();
-                
+                }
+
             }
         }
 
