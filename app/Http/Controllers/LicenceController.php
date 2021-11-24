@@ -10,7 +10,8 @@ use Illuminate\Support\Str;
 class LicenceController extends Controller
 {
     public function checkLicence(Request $request){
-        dd(exec('getmac'));
+        $macAddr = exec('getmac');
+        dd($macAddr);
         $request->validate([
             'product_code'  =>'required',
             'licence'  =>'required',
