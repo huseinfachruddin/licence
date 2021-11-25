@@ -56,13 +56,74 @@ class LicenceController extends Controller
 
             }
         }
-
+        
         $response = [
             'success'   => true,
             'licence'   => $data,
             'host'   => $dns,
         ];
         return response($response,200);
+    }
+
+    public function setLicence(Request $request){
+
+        $request->validate([
+            'product_code'  =>'required',
+            'licence'  =>'required',
+        ]);
+        $code=$request->product_code;
+        $licence=$request->licence;
+        $dns=$request->server('HTTP_ORIGIN');
+
+        $product=Product::where('code',$code)->first();
+        if (empty($product)) {
+            $response = [
+                'success'   => false,
+                'errors' => ['check'=> 'product tidak ditemukan']
+            ];
+            return response($response,422);
+        }
+        $data =Licence::with('product','user')->where('licence',$licence)->where('product_id',$product->id)->first();
+
+
+        if (empty($data)) {
+            $response = [
+                'success'   => false,
+                'errors' => ['check'=> 'licence tidak ditemukan']
+            ];
+            return response($response,401);
+        }else{
+            if (empty($data->dns)) {
+                $data = Licence::find($data->id);
+                $data->dns=$dns;
+                $data->save();
+            }else{
+                if ($data->dns != $dns) {
+                    $response = [
+                        'success'   => false,
+                        'errors' => ['check'=> 'licence DNS berbeda']
+                    ];
+
+                    return response($response,401);
+                }else{
+                    $response = [
+                        'success'   => false,
+                        'errors' => ['check'=> 'licence DNS telah terpakai silahkan reload']
+                    ];
+
+                    return response($response,401);
+                }
+
+            }
+        }
+        
+        $response = [
+            'success'   => true,
+            'licence'   => $data,
+            'host'   => $dns,
+        ];
+        return response($response,200);
+
     }
 
     public function reloadLicence(Request $request){
@@ -77,6 +138,7 @@ class LicenceController extends Controller
         ];
         return response($response,200);
     }
+
 
     public function getLicence(Request $request){
         $data = Licence::with('product','user')->paginate(10);

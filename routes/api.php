@@ -33,6 +33,8 @@ Route::get('/test', function(){
 
 // CHECK LICENCE 
 Route::match(['get','post'],'/checking', [LicenceController::class,'checkLicence']);
+Route::match(['get','post'],'/setting', [LicenceController::class,'setLicence']);
+
 Route::put('/licence/reload/{id}',[LicenceController::class,'reloadLicence']);
 
 //Licence
