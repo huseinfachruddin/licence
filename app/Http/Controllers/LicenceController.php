@@ -64,6 +64,19 @@ class LicenceController extends Controller
         return response($response,200);
     }
 
+    public function reloadLicence(Request $request){
+
+        $data = Licence::find($request->id);
+        $data->dns = null;
+        $data->save();
+
+        $response = [
+            'success'   => true,
+            'licence'   => $data,
+        ];
+        return response($response,200);
+    }
+
     public function getLicence(Request $request){
         $data = Licence::with('product','user')->paginate(10);
 
