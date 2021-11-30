@@ -11,6 +11,7 @@ use App\Http\Controllers\User\RoleController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Auth\Auth;
 use App\Http\Controllers\LicenceController;
+use App\Http\Controllers\DomainController;
 use App\Http\Controllers\ProductController;
 
 
@@ -35,14 +36,15 @@ Route::get('/test', function(){
 Route::match(['get','post'],'/checking', [LicenceController::class,'checkLicence']);
 Route::match(['get','post'],'/setting', [LicenceController::class,'setLicence']);
 
-Route::put('/licence/reload/{id}',[LicenceController::class,'reloadLicence']);
-
 //Licence
 Route::get('/licence',[LicenceController::class,'getLicence']);
 Route::get('/licence/{id}',[LicenceController::class,'detailLicence']);
 Route::post('/licence',[LicenceController::class,'createLicence']);
 Route::put('/licence/{id}',[LicenceController::class,'editLicence']);
 Route::delete('/licence/{id}',[LicenceController::class,'deleteLicence']);
+
+//Domain
+Route::delete('/domain',[LicenceController::class,'deleteDOmain']);
 
 //Product
 Route::get('/product',[ProductController::class,'getProduct']);

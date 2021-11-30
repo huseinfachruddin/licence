@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Licence;
 use App\Models\Product;
+use App\Models\Domain;
 use Illuminate\Support\Str;
 
 class LicenceController extends Controller
@@ -22,45 +23,33 @@ class LicenceController extends Controller
         if (empty($product)) {
             $response = [
                 'success'   => false,
-                'errors' => ['check'=> 'product tidak ditemukan']
+                'errors' => ['check'=> 'produk tidak ditemukan']
             ];
             return response($response,422);
         }
-        $data =Licence::with('product','user')->where('licence',$licence)->where('product_id',$product->id)->first();
-
+        $data =Licence::with('product','user','domain')->where('licence',$licence)->where('product_id',$product->id)->where('due','<=',date('Y-m-d',time()))->first();
 
         if (empty($data)) {
             $response = [
                 'success'   => false,
-                'errors' => ['check'=> 'licence tidak ditemukan']
+                'errors' => ['check'=> 'Ada kesalahan dalam lisensi']
             ];
             return response($response,401);
         }else{
-            if (empty($data->dns)) {
-                $data = Licence::find($data->id);
-                $data->dns=$dns;
-                $data->save();
-            }else{
-                if ($data->dns != $dns) {
+                $domain = Domain::where('licence_id',$data->id)->where('domain',$dns)->first();
+                if (empty($domain) || $domain->count() > $data->max_domain) {
                     $response = [
                         'success'   => false,
-                        'errors' => ['check'=> 'licence DNS berbeda']
+                        'errors' => ['check'=> 'domain belum terdaftar']
                     ];
 
                     return response($response,401);
-                }else{
-                    $data = Licence::find($data->id);
-                    $data->dns=$dns;
-                    $data->save();
                 }
-
-            }
         }
         
         $response = [
             'success'   => true,
             'licence'   => $data,
-            'host'   => $dns,
         ];
         return response($response,200);
     }
@@ -81,40 +70,31 @@ class LicenceController extends Controller
                 'success'   => false,
                 'errors' => ['check'=> 'product tidak ditemukan']
             ];
-            return response($response,422);
+            return response($response,401);
         }
-        $data =Licence::with('product','user')->where('licence',$licence)->where('product_id',$product->id)->first();
-
+        $data =Licence::with('product','user')->where('licence',$licence)->where('product_id',$product->id)->where('due','<=',date('Y-m-d',time()))->first();
 
         if (empty($data)) {
             $response = [
                 'success'   => false,
-                'errors' => ['check'=> 'licence tidak ditemukan']
+                'errors' => ['check'=> 'Ada masalah dalam lisensi']
             ];
             return response($response,401);
         }else{
-            if (empty($data->dns)) {
-                $data = Licence::find($data->id);
-                $data->dns=$dns;
-                $data->save();
-            }else{
-                if ($data->dns != $dns) {
+            $domain = Domain::where('licence_id',$data->id)->where('domain',$dns)->first();
+
+                if (!empty($domain) || $domain->count() > $data->max_domain) {
                     $response = [
                         'success'   => false,
-                        'errors' => ['check'=> 'licence DNS berbeda']
+                        'errors' => ['check'=> 'Domain sudah terdaftar atau domain sudah penuh']
                     ];
 
                     return response($response,401);
                 }else{
-                    $response = [
-                        'success'   => false,
-                        'errors' => ['check'=> 'licence DNS telah terpakai silahkan reload']
-                    ];
-
-                    return response($response,401);
+                    $domain = new Domain;
+                    $domain->domain = $dns ;
+                    $domain->seve();
                 }
-
-            }
         }
         
         $response = [
@@ -125,20 +105,6 @@ class LicenceController extends Controller
         return response($response,200);
 
     }
-
-    public function reloadLicence(Request $request){
-
-        $data = Licence::find($request->id);
-        $data->dns = null;
-        $data->save();
-
-        $response = [
-            'success'   => true,
-            'licence'   => $data,
-        ];
-        return response($response,200);
-    }
-
 
     public function getLicence(Request $request){
         $data = Licence::with('product','user')->paginate(10);
@@ -151,7 +117,7 @@ class LicenceController extends Controller
     }
 
     public function detailLicence(Request $request){
-        $data = Licence::where('id',$request->id)->with('product','user')->first();
+        $data = Licence::where('id',$request->id)->with('product','user','domain')->first();
 
         $response = [
             'success'   => true,

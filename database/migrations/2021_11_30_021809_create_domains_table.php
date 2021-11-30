@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLicencesTable extends Migration
+class CreateDomainsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateLicencesTable extends Migration
      */
     public function up()
     {
-        Schema::create('licences', function (Blueprint $table) {
+        Schema::create('domains', function (Blueprint $table) {
             $table->id();
-            $table->biginteger('product_id')->nullable();
-            $table->biginteger('user_id')->nullable();
             $table->string('licence')->nullable();
-            $table->string('max_domain')->nullable();
-            $table->date('due')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateLicencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('licences');
+        Schema::dropIfExists('domains');
     }
 }

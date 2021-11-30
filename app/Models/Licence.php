@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Domain;
 
 class Licence extends Model
 {
@@ -21,4 +22,10 @@ class Licence extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
+
+    public function domain()
+    {
+        return $this->hasMany(Domain::class,'licence_id');
+    }
+    
 }
