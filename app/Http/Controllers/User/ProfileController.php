@@ -50,7 +50,7 @@ class ProfileController extends Controller
             if (!$user || !Hash::check($request->oldPassword, $user->password)) {
                 return response([
                     'success'   => false,
-                    'errors' => ['auth'=> 'password salah']
+                    'errors' => ['auth'=> ['password salah']]
                 ], 401);
             }
         $data = User::find($user->id);
