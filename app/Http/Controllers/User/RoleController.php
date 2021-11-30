@@ -52,7 +52,7 @@ class RoleController extends Controller
             if ($data->name=='admin') {
                 $response = [
                     'success'   => false,
-                    'errors' => ['role'=> 'role admin tidak bisa diubah']
+                    'errors' => ['role'=> ['role admin tidak bisa diubah']]
                 ];
                 return response($response,422);
             }
@@ -71,7 +71,7 @@ class RoleController extends Controller
             if ($data->name=='admin') {
                 $response = [
                     'success'   => false,
-                    'errors' => ['role'=> 'role admin tidak bisa dihapus']
+                    'errors' => ['role'=> ['role admin tidak bisa dihapus']]
                 ];
                 return response($response,422);
             }
