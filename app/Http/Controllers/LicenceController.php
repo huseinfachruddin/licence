@@ -130,6 +130,7 @@ class LicenceController extends Controller
         $request->validate([
             'product_id'  =>'required',
             'user_id'  =>'required',
+            'max_domain'  =>'required',
             'due'  =>'nullable',
 
         ]);
@@ -138,6 +139,7 @@ class LicenceController extends Controller
         $data->product_id = $request->product_id;
         $data->user_id = $request->user_id;
         $data->licence = Str::random(15);
+        $data->max_domain = $request->max_domain;
         $data->due = date('Y-m-d',strtotime($request->due));
         $data->save();
 
@@ -152,14 +154,14 @@ class LicenceController extends Controller
         $request->validate([
             'product_id'  =>'required',
             'user_id'  =>'required',
-            'dns'  =>'nullable',
+            'max_domain'  =>'required',
             'due'  =>'nullable',
         ]);
 
         $data = Licence::find($request->id);
         $data->product_id = $request->product_id;
         $data->user_id = $request->user_id;
-        $data->dns = $request->dns;
+        $data->max_domain = $request->max_domain;
         $data->due = date('Y-m-d',strtotime($request->due));
         $data->save();
 
