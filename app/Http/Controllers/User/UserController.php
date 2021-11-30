@@ -41,11 +41,11 @@ class UserController extends Controller
                 if (is_array($request->role)) {
                     foreach ($request->role as $key => $value) {
                         $user = User::where('id',$request->id)->first();
-                        $user = $user->syncRoles($request->role);
+                        $user = $user->assignRole($request->role);
                     }
                 }else{
                     $user = User::where('id',$request->id)->first();
-                    $user = $user->syncRoles($request->role);
+                    $user = $user->assignRole($request->role);
                 }
             }
         $data->save();
