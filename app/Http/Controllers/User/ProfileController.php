@@ -12,7 +12,7 @@ use App\Models\User;
 class ProfileController extends Controller
 {
     public function getProfile(Request $request){
-        $data = User::where('roles')->where('id',$request->user()->id)->first();
+        $data = User::with('roles')->where('id',$request->user()->id)->first();
         $response = [
             'success'   => true,
             'profile'      => $data,
