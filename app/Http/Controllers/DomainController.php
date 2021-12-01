@@ -20,12 +20,7 @@ class DomainController extends Controller
         return response($response,200);
     }
     public function deleteDomain(Request $request){
-        if (!empty($request->licence_id)) {
-            $data = Domain::where('licence_id',$request->licence_id);
-        }else{
-            $data = Domain::find($request->id);
-        }
-
+        $data = Domain::find($request->id);
         $data->delete();
         $response = [
             'success'   => true,

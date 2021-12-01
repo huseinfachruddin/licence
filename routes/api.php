@@ -45,7 +45,7 @@ Route::delete('/licence/{id}',[LicenceController::class,'deleteLicence']);
 
 //Domain
 Route::get('/domain',[DomainController::class,'getDomain']);
-Route::delete('/domain',[DomainController::class,'deleteDomain']);
+Route::delete('/domain/{id}',[DomainController::class,'deleteDomain']);
 
 //Product
 Route::get('/product',[ProductController::class,'getProduct']);
