@@ -44,6 +44,7 @@ Route::put('/licence/{id}',[LicenceController::class,'editLicence']);
 Route::delete('/licence/{id}',[LicenceController::class,'deleteLicence']);
 
 //Domain
+Route::get('/domain',[LicenceController::class,'getDomain']);
 Route::delete('/domain',[LicenceController::class,'deleteDomain']);
 
 //Product
