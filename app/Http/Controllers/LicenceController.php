@@ -45,25 +45,26 @@ class LicenceController extends Controller
 
                     return response($response,401);
                 }
+            }
+            
+            $response = [
+                'success'   => true,
+                'licence'   => $data,
+            ];
+            return response($response,200);
         }
         
-        $response = [
-            'success'   => true,
-            'licence'   => $data,
-        ];
-        return response($response,200);
-    }
-
-    public function setLicence(Request $request){
-
-        $request->validate([
-            'product_code'  =>'required',
-            'licence'  =>'required',
-        ]);
-        $code=$request->product_code;
-        $licence=$request->licence;
-        $dns=$request->server('HTTP_ORIGIN');
-
+        public function setLicence(Request $request){
+            
+            $request->validate([
+                'product_code'  =>'required',
+                'licence'  =>'required',
+            ]);
+            $code=$request->product_code;
+            $licence=$request->licence;
+            $dns=$request->server('HTTP_ORIGIN');
+            dd($dns);
+            
         $product=Product::where('code',$code)->first();
         if (empty($product)) {
             $response = [
@@ -94,7 +95,6 @@ class LicenceController extends Controller
                     $domain = new Domain;
                     $domain->licence_id = $data->id;
                     $domain->domain = $dns;
-                    dd($dns);
                     $domain->seve();
                 }
         }
