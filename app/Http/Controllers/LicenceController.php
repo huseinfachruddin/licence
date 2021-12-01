@@ -107,7 +107,7 @@ class LicenceController extends Controller
     }
 
     public function getLicence(Request $request){
-        $data = Licence::with('product','user')->paginate(10);
+        $data = Licence::with('product','user','domain')->paginate(10);
 
         $response = [
             'success'   => true,
