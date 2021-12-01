@@ -9,7 +9,7 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function getUser(Request $request){
-        $data = User::with('roles')->paginate(10);
+        $data = User::with('roles')->paginate(5);
         $response = [
             'success'   => true,
             'user'      => $data,
