@@ -14,7 +14,7 @@ class Domain extends Model
 
     public function licence()
     {
-        return $this->belongsTo(Product::class,'licence_id');
+        return $this->belongsTo(Licence::class,'licence_id');
     }
     
     
