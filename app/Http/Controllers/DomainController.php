@@ -8,9 +8,6 @@ use App\Models\Domain;
 class DomainController extends Controller
 {
     public function getDomain(Request $request){
-        $request->validate([
-            'licence_id'  =>'required',
-        ]);
         $data = Domain::where('licence_id',$request->licence_id)->get();
 
         $response = [
