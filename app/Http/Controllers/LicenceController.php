@@ -96,7 +96,7 @@ class LicenceController extends Controller
                     $domain = new Domain;
                     $domain->licence_id = $data->id;
                     $domain->domain = $dns;
-                    $domain->seve();
+                    $domain->save();
                 }
         }
         
