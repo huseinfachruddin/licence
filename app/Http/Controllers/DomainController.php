@@ -11,7 +11,8 @@ class DomainController extends Controller
         $request->validate([
             'licence_id'  =>'required',
         ]);
-        $data = Domain::where($request->licence_id)->get();
+        $data = Domain::where('licence',$request->licence_id)->get();
+
         $response = [
             'success'   => true,
             'domain'      => $data,
@@ -20,10 +21,11 @@ class DomainController extends Controller
     }
     public function deleteDomain(Request $request){
         if (!empty($request->licence_id)) {
-            $data = Domain::where($request->licence_id);
+            $data = Domain::where('licence',$request->licence_id);
         }else{
             $data = Domain::find($request->id);
         }
+
         $data->delete();
         $response = [
             'success'   => true,
