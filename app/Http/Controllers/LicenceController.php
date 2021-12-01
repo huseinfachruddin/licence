@@ -14,11 +14,11 @@ class LicenceController extends Controller
         $request->validate([
             'product_code'  =>'required',
             'licence'  =>'required',
+            'domain'  =>'required',
         ]);
         $code=$request->product_code;
         $licence=$request->licence;
-        $dns=$request->server('HTTP_ORIGIN');
-        dd($dns);
+        $dns=$request->domain;
 
         $product=Product::where('code',$code)->first();
         if (empty($product)) {
@@ -60,11 +60,11 @@ class LicenceController extends Controller
             $request->validate([
                 'product_code'  =>'required',
                 'licence'  =>'required',
+                'domain'  =>'required',
             ]);
             $code=$request->product_code;
             $licence=$request->licence;
-            $dns=$request->server('HTTP_HOST');
-            dd($dns);
+            $dns=$request->domain;
             
         $product=Product::where('code',$code)->first();
         if (empty($product)) {
