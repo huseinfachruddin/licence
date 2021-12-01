@@ -63,7 +63,7 @@ class LicenceController extends Controller
             $code=$request->product_code;
             $licence=$request->licence;
             $dns=$request->server('HTTP_ORIGIN');
-            dd(request()->headers->get('origin'));
+            dd($request);
             
         $product=Product::where('code',$code)->first();
         if (empty($product)) {
