@@ -92,7 +92,8 @@ class LicenceController extends Controller
                     return response($response,401);
                 }else{
                     $domain = new Domain;
-                    $domain->domain = $dns ;
+                    $domain->licence_id = $data->id;
+                    $domain->domain = $dns;
                     $domain->seve();
                 }
         }
