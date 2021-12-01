@@ -72,7 +72,7 @@ class LicenceController extends Controller
             ];
             return response($response,401);
         }
-        $data =Licence::with('product','user')->where('licence',$licence)->where('product_id',$product->id)->first();
+        $data =Licence::with('product','user','domain')->where('licence',$licence)->where('product_id',$product->id)->first();
 
         if (empty($data) &&$data->due>date('Y-m-d',time())) {
             $response = [
@@ -83,7 +83,7 @@ class LicenceController extends Controller
         }else{
             $domain = Domain::where('licence_id',$data->id)->where('domain',$dns)->first();
 
-                if (!empty($domain) || $domain->count() > $data->max_domain) {
+                if (!empty($domain) || $data->domain()->count() > $data->max_domain) {
                     $response = [
                         'success'   => false,
                         'errors' => ['check'=> 'Domain sudah terdaftar atau domain sudah penuh']
