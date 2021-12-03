@@ -110,6 +110,7 @@ class LicenceController extends Controller
     }
 
     public function getLicence(Request $request){
+        dd($request->user()->hasRole('admin'));
         if ($request->user()->hasRole('admin')) {
             $data = Licence::with('product','user','domain')->where('user_id',$request->user()->id)->paginate(10);
         }else{
