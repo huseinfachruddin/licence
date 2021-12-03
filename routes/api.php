@@ -36,13 +36,6 @@ Route::get('/test', function(){
 Route::match(['get','post'],'/checking', [LicenceController::class,'checkLicence']);
 Route::match(['get','post'],'/setting', [LicenceController::class,'setLicence']);
 
-//Licence
-Route::get('/licence',[LicenceController::class,'getLicence']);
-Route::get('/licence/{id}',[LicenceController::class,'detailLicence']);
-Route::post('/licence',[LicenceController::class,'createLicence']);
-Route::put('/licence/{id}',[LicenceController::class,'editLicence']);
-Route::delete('/licence/{id}',[LicenceController::class,'deleteLicence']);
-
 //Domain
 Route::get('/domain',[DomainController::class,'getDomain']);
 Route::delete('/domain/{id}',[DomainController::class,'deleteDomain']);
@@ -88,6 +81,13 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     Route::put('/role/{id}',[RoleController::class,'editRole']);
     Route::delete('/role/{id}',[RoleController::class,'deleteRole']);
 
+    // Licence
+    Route::get('/licence',[LicenceController::class,'getLicence']);
+    Route::get('/licence/{id}',[LicenceController::class,'detailLicence']);
+    Route::post('/licence',[LicenceController::class,'createLicence']);
+    Route::put('/licence/{id}',[LicenceController::class,'editLicence']);
+    Route::delete('/licence/{id}',[LicenceController::class,'deleteLicence']);
+    
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/admin',function(Request $request){
             return 'Ok';
