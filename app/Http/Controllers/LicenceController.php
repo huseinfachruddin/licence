@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Licence;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Domain;
 use Illuminate\Support\Str;
@@ -110,12 +111,12 @@ class LicenceController extends Controller
     }
 
     public function getLicence(Request $request){
-        // dd($request->user());
-        // if ($request->user()->hasRole('admin')) {
-            $data = Licence::with('product','user','domain')->where('user_id',$request->user()->id)->paginate(10);
-        // }else{
-        //     $data = Licence::with('product','user','domain')->paginate(10);
-        // }
+        $user = User::find($request->user()->id);
+        if ($user->hasRole('admin')) {
+            $data = Licence::with('product','user','domain')->where('user_id',$user->id)->paginate(10);
+        }else{
+            $data = Licence::with('product','user','domain')->paginate(10);
+        }
 
         $response = [
             'success'   => true,
