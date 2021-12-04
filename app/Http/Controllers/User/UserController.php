@@ -14,7 +14,6 @@ class UserController extends Controller
         }else{
             $data = User::with('roles')->paginate(10);
         }
-        $data = User::with('roles')->paginate(10);
         $response = [
             'success'   => true,
             'user'      => $data,
