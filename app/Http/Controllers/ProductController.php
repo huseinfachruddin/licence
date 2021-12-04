@@ -8,7 +8,11 @@ use App\Models\Product;
 class ProductController extends Controller
 {
     public function getProduct(Request $request){
-        $data = Product::paginate(10);
+        if ($request->all==true) {
+            $data = Product::all();
+        }else{
+            $data = Product::paginate(10);
+        }
         $response = [
             'success'   => true,
             'product'      => $data,

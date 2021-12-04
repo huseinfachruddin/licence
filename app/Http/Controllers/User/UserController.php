@@ -9,6 +9,11 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function getUser(Request $request){
+        if ($request->all==true) {
+            $data = User::all();
+        }else{
+            $data = User::with('roles')->paginate(10);
+        }
         $data = User::with('roles')->paginate(10);
         $response = [
             'success'   => true,
