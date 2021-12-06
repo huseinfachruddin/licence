@@ -40,6 +40,7 @@ class LicenceController extends Controller
         }else{
                 $domain = Domain::where('licence_id',$data->id)->where('domain',$dns)->first();
                 if (empty($domain) || $domain->count() > $data->max_domain) {
+                    dd($domain);
                     $response = [
                         'success'   => false,
                         'errors' => ['check'=> 'domain belum terdaftar']
