@@ -101,7 +101,7 @@ class LicenceController extends Controller
         }else{
             $domain = Domain::where('licence_id',$data->id)->where('domain',$dns)->first();
 
-            if ($data->domain()->count() < $data->max_domain) {
+            if ($data->domain()->count() >= $data->max_domain) {
                 $response = [
                     'success'   => false,
                     'errors' => ['check'=> 'Lisensi anda sudah terpasang di '.$dns]
