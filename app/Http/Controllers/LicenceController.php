@@ -34,7 +34,7 @@ class LicenceController extends Controller
         if (empty($data) || $data->due < date('Y-m-d',time())) {
             $response = [
                 'success'   => false,
-                'errors' => ['check'=> 'Ada kesalahan dalam lisensi']
+                'errors' => ['check'=> 'Kode lisensi tidak terdaftar']
             ];
             return response($response,401);
         }else{
@@ -80,7 +80,7 @@ class LicenceController extends Controller
         if (empty($data) || $data->due < date('Y-m-d',time())) {
             $response = [
                 'success'   => false,
-                'errors' => ['check'=> 'Ada masalah dalam lisensi']
+                'errors' => ['check'=> 'Kode lisensi tidak terdaftar']
             ];
             return response($response,401);
         }else{
