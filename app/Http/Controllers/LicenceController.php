@@ -31,7 +31,7 @@ class LicenceController extends Controller
         }
         $data =Licence::with('product','user','domain')->where('licence',$licence)->where('product_id',$product->id)->first();
 
-        if (empty($data)&& $data->due>date('Y-m-d',time())) {
+        if (empty($data)&& $data->due < date('Y-m-d',time())) {
             $response = [
                 'success'   => false,
                 'errors' => ['check'=> 'Ada kesalahan dalam lisensi']
@@ -77,7 +77,7 @@ class LicenceController extends Controller
         }
         $data =Licence::with('product','user','domain')->where('licence',$licence)->where('product_id',$product->id)->first();
 
-        if (empty($data) &&$data->due>date('Y-m-d',time())) {
+        if (empty($data) && $data->due>date('Y-m-d',time())) {
             $response = [
                 'success'   => false,
                 'errors' => ['check'=> 'Ada masalah dalam lisensi']
@@ -87,7 +87,7 @@ class LicenceController extends Controller
             $domain = Domain::where('licence_id',$data->id)->where('domain',$dns)->first();
 
                 if (!empty($domain)) {
-                    if ($data->domain()->count() > $data->max_domain) {
+                    if ($data->domain()->count() < $data->max_domain) {
                         $response = [
                             'success'   => false,
                             'errors' => ['check'=> 'Lisensi anda sudah terpasang di '.$dns]
@@ -95,6 +95,7 @@ class LicenceController extends Controller
     
                         return response($response,401);
                     }
+                    
                     $response = [
                         'success'   => false,
                         'errors' => ['check'=> 'Domain '.$dns.' sudah teraktivasi silahkan gunakan domain lain atau hapus domain tersebut dari "produk.digital.id"']
