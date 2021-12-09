@@ -86,10 +86,18 @@ class LicenceController extends Controller
         }else{
             $domain = Domain::where('licence_id',$data->id)->where('domain',$dns)->first();
 
-                if (!empty($domain) || $data->domain()->count() > $data->max_domain) {
+                if (!empty($domain)) {
+                    if ($data->domain()->count() > $data->max_domain) {
+                        $response = [
+                            'success'   => false,
+                            'errors' => ['check'=> 'Lisensi anda sudah terpasang di '.$dns]
+                        ];
+    
+                        return response($response,401);
+                    }
                     $response = [
                         'success'   => false,
-                        'errors' => ['check'=> 'Domain sudah terdaftar atau domain sudah penuh']
+                        'errors' => ['check'=> 'Domain '.$dns.' sudah teraktivasi silahkan gunakan domain lain atau hapus domain tersebut dari "produk.digital.id"']
                     ];
 
                     return response($response,401);
