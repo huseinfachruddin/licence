@@ -33,7 +33,7 @@ class LicenceController extends Controller
         if ($data->due > date('Y-m-d',time())) {
             $response = [
                 'success'   => false,
-                'errors' => ['check'=> 'Lisensi anda sudah melawati maximal jumlah dumain']
+                'errors' => ['check'=> 'Lisensi anda sudah melawati maximal jumlah domain']
             ];
             return response($response,401);
         }
@@ -87,7 +87,7 @@ class LicenceController extends Controller
         if ($data->due > date('Y-m-d',time())) {
             $response = [
                 'success'   => false,
-                'errors' => ['check'=> 'Lisensi anda sudah melawati maximal jumlah dumain']
+                'errors' => ['check'=> 'Lisensi anda sudah melawati maximal jumlah domain']
             ];
             return response($response,401);
         }
