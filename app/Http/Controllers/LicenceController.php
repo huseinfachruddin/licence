@@ -98,7 +98,7 @@ class LicenceController extends Controller
                     
                     $response = [
                         'success'   => false,
-                        'errors' => ['check'=> 'Domain '.$dns.' sudah teraktivasi silahkan gunakan domain lain atau hapus domain tersebut dari <a href="https://produk.ruasdigital.id">https://produk.ruasdigital.id/</a>']
+                        'errors' => ['check'=> 'Domain '.$dns.' sudah teraktivasi silahkan gunakan domain lain atau hapus domain tersebut dari https://produk.ruasdigital.id']
                     ];
 
                     return response($response,401);
