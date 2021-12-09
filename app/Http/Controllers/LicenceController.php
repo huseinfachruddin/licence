@@ -87,7 +87,7 @@ class LicenceController extends Controller
         if ($data->due < date('Y-m-d',time())) {
             $response = [
                 'success'   => false,
-                'errors' => ['check'=> 'Lisensi anda sudah melawati maximal jumlah domain']
+                'errors' => ['check'=> 'Lisensi anda sudah kadaluarsa']
             ];
             return response($response,401);
         }
@@ -110,19 +110,21 @@ class LicenceController extends Controller
                 
                 return response($response,401);
             }else{
+                if ($data->domain()->count() >= $data->max_domain) {
+                    $response = [
+                        'success'   => false,
+                        'errors' => ['check'=> 'Lisensi anda sudah melawati maximal jumlah domain']
+                    ];
+    
+                    return response($response,401);
+                }
+                
                 $domain = new Domain;
                 $domain->licence_id = $data->id;
                 $domain->domain = $dns;
                 $domain->save();
             }
-            if ($data->domain()->count() >= $data->max_domain) {
-                $response = [
-                    'success'   => false,
-                    'errors' => ['check'=> 'Domain lisensi sudah penuh']
-                ];
-
-                return response($response,401);
-            }
+            
         }
         
         $response = [
