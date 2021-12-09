@@ -101,28 +101,28 @@ class LicenceController extends Controller
         }else{
             $domain = Domain::where('licence_id',$data->id)->where('domain',$dns)->first();
 
+            if (!empty($domain)) {
+                    
+                $response = [
+                    'success'   => false,
+                    'errors' => ['check'=> 'Domain '.$dns.' sudah teraktivasi silahkan gunakan domain lain atau hapus domain tersebut dari https://produk.ruasdigital.id']
+                ];
+                
+                return response($response,401);
+            }else{
+                $domain = new Domain;
+                $domain->licence_id = $data->id;
+                $domain->domain = $dns;
+                $domain->save();
+            }
             if ($data->domain()->count() >= $data->max_domain) {
                 $response = [
                     'success'   => false,
-                    'errors' => ['check'=> 'Lisensi anda sudah terpasang di '.$dns]
+                    'errors' => ['check'=> 'Domain lisensi sudah penuh']
                 ];
 
                 return response($response,401);
             }
-                if (!empty($domain)) {
-                    
-                    $response = [
-                        'success'   => false,
-                        'errors' => ['check'=> 'Domain '.$dns.' sudah teraktivasi silahkan gunakan domain lain atau hapus domain tersebut dari https://produk.ruasdigital.id']
-                    ];
-
-                    return response($response,401);
-                }else{
-                    $domain = new Domain;
-                    $domain->licence_id = $data->id;
-                    $domain->domain = $dns;
-                    $domain->save();
-                }
         }
         
         $response = [
