@@ -30,8 +30,15 @@ class LicenceController extends Controller
             return response($response,422);
         }
         $data =Licence::with('product','user','domain')->where('licence',$licence)->where('product_id',$product->id)->first();
+        if ($data->due > date('Y-m-d',time())) {
+            $response = [
+                'success'   => false,
+                'errors' => ['check'=> 'Lisensi anda sudah melawati maximal jumlah dumain']
+            ];
+            return response($response,401);
+        }
 
-        if (empty($data) || $data->due > date('Y-m-d',time())) {
+        if (empty($data)) {
             $response = [
                 'success'   => false,
                 'errors' => ['check'=> 'Kode lisensi tidak terdaftar']
@@ -76,8 +83,16 @@ class LicenceController extends Controller
             return response($response,401);
         }
         $data =Licence::with('product','user','domain')->where('licence',$licence)->where('product_id',$product->id)->first();
+        
+        if ($data->due > date('Y-m-d',time())) {
+            $response = [
+                'success'   => false,
+                'errors' => ['check'=> 'Lisensi anda sudah melawati maximal jumlah dumain']
+            ];
+            return response($response,401);
+        }
 
-        if (empty($data) || $data->due > date('Y-m-d',time())) {
+        if (empty($data)) {
             $response = [
                 'success'   => false,
                 'errors' => ['check'=> 'Kode lisensi tidak terdaftar']
