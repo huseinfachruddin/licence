@@ -4,22 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Licence;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Product;
 
-
-class Domain extends Model
+class Package extends Model
 {
     use HasFactory;
     use SoftDeletes;
     protected $fillable = ['*'];
 
-    public function licence()
+    public function product()
     {
-        return $this->belongsTo(Licence::class,'licence_id');
+        return $this->belongsTo(Product::class,'product_id');
     }
-    
-    
-    
-
 }

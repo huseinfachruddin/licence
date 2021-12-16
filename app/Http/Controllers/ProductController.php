@@ -22,7 +22,7 @@ class ProductController extends Controller
     }
 
     public function detailProduct(Request $request){
-        $data = Product::where('id',$request->id)->first();
+        $data = Product::with('package')->where('id',$request->id)->first();
         $response = [
             'success'   => true,
             'product'      => $data,

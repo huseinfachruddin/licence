@@ -167,7 +167,6 @@ class LicenceController extends Controller
             'user_id'  =>'required',
             'max_domain'  =>'required',
             'due'  =>'nullable',
-
         ]);
 
         $data = new Licence;

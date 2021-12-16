@@ -13,6 +13,10 @@ use App\Http\Controllers\Auth\Auth;
 use App\Http\Controllers\LicenceController;
 use App\Http\Controllers\DomainController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PackageController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\XenditController;
 
 
 /*
@@ -40,12 +44,18 @@ Route::match(['get','post'],'/setting', [LicenceController::class,'setLicence'])
 Route::get('/domain',[DomainController::class,'getDomain']);
 Route::delete('/domain/{id}',[DomainController::class,'deleteDomain']);
 
-//Product
 Route::get('/product',[ProductController::class,'getProduct']);
 Route::get('/product/{id}',[ProductController::class,'detailProduct']);
 Route::post('/product',[ProductController::class,'createProduct']);
 Route::put('/product/{id}',[ProductController::class,'editProduct']);
 Route::delete('/product/{id}',[ProductController::class,'deleteProduct']);
+
+// Profile
+Route::get('/package',[PackageController::class,'getPackage']);
+Route::get('/package/{id}',[PackageController::class,'detailPackage']);
+Route::post('/package',[PackageController::class,'createPackage']);
+Route::put('/package',[PackageController::class,'editPackage']);
+Route::delete('/package/{id}',[PackageController::class,'deletePackage']);
 
 // USER API
 // Route::get('/user',[UserController::class,'getUser']);
@@ -62,8 +72,14 @@ Route::delete('/product/{id}',[ProductController::class,'deleteProduct']);
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);
 
+
 Route::group(['middleware'=>'auth:sanctum'],function(){ 
     Route::get('/logout',[Auth::class,'logout']);
+    // Order
+    Route::get('/order',[OrderController::class,'getOrder']);
+    Route::get('/order/{id}',[OrderController::class,'detailOrder']);
+    Route::post('/order',[OrderController::class,'createOrder']);
+    Route::delete('/order/{id}',[OrderController::class,'deleteOrder']);
     
     // Profile
     Route::get('/profile',[ProfileController::class,'getProfile']);
@@ -87,7 +103,18 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     Route::post('/licence',[LicenceController::class,'createLicence']);
     Route::put('/licence/{id}',[LicenceController::class,'editLicence']);
     Route::delete('/licence/{id}',[LicenceController::class,'deleteLicence']);
+
+    // Cart
+    Route::get('/cart',[CartController::class,'getCart']);
+    Route::post('/cart',[CartController::class,'createCart']);
+    Route::delete('/cart/subcart/{id}',[CartController::class,'deleteSubcart']);
     
+    //Xendit
+    Route::get('/xendit/channel',[XenditController::class,'getChannel']);
+    Route::post('/xendit/payment',[XenditController::class,'payment']);
+    Route::post('/xendit/invoice',[XenditController::class,'invoice']);
+    Route::post('/xendit/paid',[XenditController::class,'paid']);
+
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/admin',function(Request $request){
             return 'Ok';

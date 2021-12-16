@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Domain;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Licence extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $fillable = ['*'];
 
     public function product()
