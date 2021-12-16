@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Licence;
 use Xendit\Xendit;
-Xendit::setApiKey('xnd_development_78pJkaHadrSYbhUvpTKEiXe3nvDbkTvBHIMeay8gcCUFmDeT8ea8fPaKUpA0vDD');
+Xendit::setApiKey('xnd_production_bFCXKxdow7fRIccoLP4kptLTSdsJMwMOVxIFzCR04x8KZzNr583Kgzvf3NtMnSRD');
 
 class XenditController extends Controller
 {

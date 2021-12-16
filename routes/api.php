@@ -57,21 +57,11 @@ Route::post('/package',[PackageController::class,'createPackage']);
 Route::put('/package',[PackageController::class,'editPackage']);
 Route::delete('/package/{id}',[PackageController::class,'deletePackage']);
 
-// USER API
-// Route::get('/user',[UserController::class,'getUser']);
-// Route::get('/user/{id}',[UserController::class,'detailUser']);
-// Route::put('/user/{id}',[UserController::class,'editUser']);
-// Route::delete('/user/{id}',[UserController::class,'deleteUser']);
-
-// Route::get('/role',[RoleController::class,'getRole']);
-// Route::get('/role/{id}',[RoleController::class,'detailRole']);
-// Route::post('/role',[RoleController::class,'createRole']);
-// Route::put('/role/{id}',[RoleController::class,'editRole']);
-// Route::delete('/role/{id}',[RoleController::class,'deleteRole']);
 
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);
 
+Route::post('/xendit/paid',[XenditController::class,'paid']);
 
 Route::group(['middleware'=>'auth:sanctum'],function(){ 
     Route::get('/logout',[Auth::class,'logout']);
@@ -113,7 +103,6 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     Route::get('/xendit/channel',[XenditController::class,'getChannel']);
     Route::post('/xendit/payment',[XenditController::class,'payment']);
     Route::post('/xendit/invoice',[XenditController::class,'invoice']);
-    Route::post('/xendit/paid',[XenditController::class,'paid']);
 
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/admin',function(Request $request){
