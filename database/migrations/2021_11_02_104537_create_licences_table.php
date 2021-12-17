@@ -21,6 +21,7 @@ class CreateLicencesTable extends Migration
             $table->string('max_domain')->nullable();
             $table->date('due')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

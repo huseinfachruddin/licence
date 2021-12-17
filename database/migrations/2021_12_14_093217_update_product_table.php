@@ -15,12 +15,8 @@ class UpdateProductTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->longText('desc')->nullable()->change();
-            $table->softDeletes();
-        });
+            });
 
-        Schema::table('licences', function (Blueprint $table) {
-            $table->softDeletes();
-        });
     }
 
     /**

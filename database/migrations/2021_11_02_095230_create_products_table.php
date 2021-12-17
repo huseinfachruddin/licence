@@ -19,6 +19,8 @@ class CreateProductsTable extends Migration
             $table->string('name')->nullable();
             $table->string('desc')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 
