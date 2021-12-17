@@ -50,8 +50,10 @@ class CartController extends Controller
             $sub->amount = 1;
             $sub->save();
 
+            $package = Package::find($sub->package_id);
+
             $sub = Subcart::find($sub->id);
-            $sub->total = $sub->package()->price * $sub->amount;
+            $sub->total = $package->price * $sub->amount;
             $sub->save();
         }
 

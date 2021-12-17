@@ -40,6 +40,9 @@ class UserController extends Controller
         $data->name = $request->name;
         $data->email = $request->email;
         $data->phone = $request->phone;
+        $data->greeting = $request->greeting;
+        $data->fullname = $request->fullname;
+
             if (!empty($request->role)) {
                 $data->roles()->detach();
                 if (is_array($request->role)) {

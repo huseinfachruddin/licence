@@ -31,6 +31,8 @@ class ProfileController extends Controller
         $data->name = $request->name;
         $data->email = $request->email;
         $data->phone = $request->phone;
+        $data->greeting = $request->greeting;
+        $data->fullname = $request->fullname;
         $data->save();
 
         $response = [
