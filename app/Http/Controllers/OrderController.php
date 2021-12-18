@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function getOrder(Request $request){
         $user = User::find($request->user()->id);
         if ($user->hasRole('admin')) {
-            $data = Order::with('user','suborder.package.product')->get();
+            $data = Order::withTrashed()->with('user','suborder.package.product')->get();
         }else{
             $data = Order::with('user','suborder.package.product')->where('user_id',$request->user()->id)->get();
         }
