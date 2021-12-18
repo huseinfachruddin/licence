@@ -28,7 +28,7 @@ class OrderController extends Controller
     }
 
     public function detailOrder(Request $request){
-        $data = Order::with('user','suborder.package.product',)->where('id',$request->id)->first();
+        $data = Order::withTrashed()->with('user','suborder.package.product',)->where('id',$request->id)->first();
 
         $response = [
             'success'   => true,
