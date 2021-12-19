@@ -73,6 +73,7 @@ class OrderController extends Controller
         ]);
         
         $data = Order::find($request->id);
+        dd($data);
         $data->status = $request->status;
         $data->save();
 
