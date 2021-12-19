@@ -69,7 +69,7 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     Route::get('/order',[OrderController::class,'getOrder']);
     Route::get('/order/{id}',[OrderController::class,'detailOrder']);
     Route::post('/order',[OrderController::class,'createOrder']);
-    Route::put('/order',[OrderController::class,'editOrder']);
+    Route::put('/order/{id}',[OrderController::class,'editOrder']);
     Route::delete('/order/{id}',[OrderController::class,'deleteOrder']);
     
     // Profile
