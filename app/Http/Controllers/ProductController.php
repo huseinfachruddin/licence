@@ -41,6 +41,7 @@ class ProductController extends Controller
         $data->code = $request->code;
         $data->name = $request->name;
         $data->desc = $request->desc;
+        $data->link = $request->link;
         $data->save();
         
         $response = [
@@ -62,6 +63,7 @@ class ProductController extends Controller
         $data->code = $request->code;
         $data->name = $request->name;
         $data->desc = $request->desc;
+        $data->link = $request->link;
         $data->save();
 
         $response = [
