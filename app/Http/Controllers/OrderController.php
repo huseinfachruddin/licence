@@ -86,9 +86,6 @@ class OrderController extends Controller
 
     public function deleteOrder(Request $request){
         $data = Order::find($request->id);
-        $data->status='dibatalkan';
-        $data->save();
-        $data = Order::find($request->id);
         $data->delete();
 
         $response = [
