@@ -39,7 +39,7 @@ class XenditController extends Controller
 
         $data = Order::find($request->id); 
         $data->paid_code = $createFPC['id'];
-        $data->status = "pending";
+        $data->status = "menunggu pembayaran";
         $data->save();
 
         $response = [
@@ -67,6 +67,8 @@ class XenditController extends Controller
     public function paid(Request $request){
 
         $order = Order::with('user','suborder.package.product')->where('paid_code',$request->id)->first();
+        $order = Order::find($order->id);
+        $order->status = 'sudah dibayar';
         foreach ($order->suborder as $key => $value) {
             $product = $value->package->product;
             for ($i=0; $i < $value->package->num_licence; $i++) { 

@@ -67,9 +67,28 @@ class OrderController extends Controller
         return response($response,200); 
     }
 
+    public function editOrder(Request $request){
+        $request->validate([
+            'status'  =>'required',
+        ]);
+        
+        $data = Order::find($request->id);
+        $data->status = $request->status;
+        $data->save();
+
+        $response = [
+            'success'   => true,
+            'order'      => $data,
+        ];
+        return response($response,200); 
+    }
+
+
     public function deleteOrder(Request $request){
         $data = Order::find($request->id);
-        $data->delete();
+        $data->status=$request->status;
+        $data->save();
+
         $response = [
             'success'   => true,
             'order'      => $data,
