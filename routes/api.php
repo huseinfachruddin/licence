@@ -17,8 +17,8 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\XenditController;
-
-
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\TransferController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -57,6 +57,17 @@ Route::post('/package',[PackageController::class,'createPackage']);
 Route::put('/package',[PackageController::class,'editPackage']);
 Route::delete('/package/{id}',[PackageController::class,'deletePackage']);
 
+//Transfer
+Route::get('/transfer',[TransferController::class,'getTransfer']);
+Route::post('/transfer',[TransferController::class,'createTransfer']);
+Route::put('/transfer/{id}',[TransferController::class,'detailTransfer']);
+Route::delete('/transfer/{id}',[TransferController::class,'deleteTransfer']);
+
+//Account
+Route::get('/account',[AccountController::class,'getAccount']);
+Route::post('/account',[AccountController::class,'createAccount']);
+Route::put('/account/{id}',[AccountController::class,'editAccount']);
+Route::delete('/account/{id}',[AccountController::class,'deleteAccount']);
 
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);

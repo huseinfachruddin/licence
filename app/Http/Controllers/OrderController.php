@@ -74,6 +74,8 @@ class OrderController extends Controller
         
         $data = Order::find($request->id);
         $data->status = $request->status;
+        if ($request->method) $data->method = $request->method;
+        if ($request->total) $data->total = $request->total;
         $data->save();
 
         $response = [
