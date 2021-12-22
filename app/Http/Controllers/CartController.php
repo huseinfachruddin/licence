@@ -10,7 +10,7 @@ use App\Models\Package;
 class CartController extends Controller
 {
     public function getCart(Request $request){
-        $data = Cart::with('subcart.package.product','user')->where('user_id',$request->user()->id)->first();
+        $data = Cart::with('subcart.package.product','user')->where('user_id',$request->user()->id)->orderBy('id', 'DESC')->first();
 
         $response = [
             'success'   => true,

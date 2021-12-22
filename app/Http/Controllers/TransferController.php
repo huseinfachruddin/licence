@@ -10,7 +10,7 @@ use App\Models\Transfer;
 class TransferController extends Controller
 {
     public function getTransfer(){
-        $data = Transfer::with('order.user','order.suborder.package.product','account')->get();
+        $data = Transfer::with('order.user','order.suborder.package.product','account')->orderBy('id', 'DESC')->get();
         
         $response = [
             'success'   => true,

@@ -9,9 +9,9 @@ class ProductController extends Controller
 {
     public function getProduct(Request $request){
         if ($request->all==true) {
-            $data = Product::all();
+            $data = Product::orderBy('id', 'DESC')->all();
         }else{
-            $data = Product::paginate(10);
+            $data = Product::orderBy('id', 'DESC')->paginate(10);
         }
         $response = [
             'success'   => true,
