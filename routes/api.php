@@ -42,6 +42,7 @@ Route::get('/test', function(){
 Route::get('/xendit/channel',[XenditController::class,'getChannel']);
 Route::post('/xendit/payment',[XenditController::class,'payment']);
 Route::post('/xendit/invoice',[XenditController::class,'invoice']);
+Route::post('/xendit/callback',[XenditController::class,'paid']);
 
 
 
