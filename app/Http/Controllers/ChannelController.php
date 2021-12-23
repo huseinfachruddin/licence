@@ -8,7 +8,12 @@ use App\Models\Channel;
 class ChannelController extends Controller
 {
     public function getChannel(Request $request){
-        $data = Channel::orderBy('queue','ASC')->get();
+        $user = User::find($request->user()->id);
+        if ($user->hasRole('admin')) {
+            $data = Channel::orderBy('queue','ASC')->get();
+        }else{
+            $data = Channel::orderBy('queue','ASC')->where('active',true)->get();
+        }
         foreach ($data as $key => $value) {
             $value->img= url("/channel/".$value->img);
         }
