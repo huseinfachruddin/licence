@@ -19,6 +19,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\XenditController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\ChannelController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -68,6 +69,13 @@ Route::get('/account',[AccountController::class,'getAccount']);
 Route::post('/account',[AccountController::class,'createAccount']);
 Route::put('/account/{id}',[AccountController::class,'editAccount']);
 Route::delete('/account/{id}',[AccountController::class,'deleteAccount']);
+
+//Channel
+Route::get('/channel',[ChannelController::class,'getChannel']);
+Route::post('/channel',[ChannelController::class,'createChannel']);
+Route::put('/channel/queue',[ChannelController::class,'queueChannel']);
+Route::put('/channel/{id}',[ChannelController::class,'editChannel']);
+Route::delete('/channel/{id}',[ChannelController::class,'deleteChannel']);
 
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);
