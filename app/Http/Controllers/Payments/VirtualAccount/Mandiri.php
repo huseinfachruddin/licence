@@ -11,39 +11,34 @@
 	Xendit::setApiKey('xnd_production_bFCXKxdow7fRIccoLP4kptLTSdsJMwMOVxIFzCR04x8KZzNr583Kgzvf3NtMnSRD');
 	class Mandiri extends controller
 	{
-		
-		function __construct($data)
-		{
-			$this->data = $data;
-		}
 
-		public function createPayment()
+		public function createPayment($request)
 		{
 			$params = [
 			   	"is_closed" => true,
-				"external_id" => $this->data->id,
-			   	"bank_code" => $this->data->channel,
-			   	"name" => "user",
+				"external_id" => (string)$request->id,
+			   	"bank_code" => (string)$request->channel,
+			   	"name" => $request->user()->name,
 			   	"expiration_date" => date('Y-m-d\TH:i:sO', strtotime('+1 days')),
-         		"expected_amount" => $this->data->total,
+         		"expected_amount" => $request->total,
 			];
 
 			$createVA = \Xendit\VirtualAccounts::create($params);
 			return $createVA;
 		}
 
-		public function checkPayment($value='')
+		public function checkPayment($request)
 		{
-			$getVA = \Xendit\VirtualAccounts::retrieve($this->data->id, []);
+			$getVA = \Xendit\VirtualAccounts::retrieve($request->id, []);
 			return $getVA;
 		}
 
-		public function updatePayment($value='')
+		public function updatePayment($request)
 		{
 			# code...
 		}
 
-		public function deletePayment($value='')
+		public function deletePayment($request)
 		{
 			# code...
 		}

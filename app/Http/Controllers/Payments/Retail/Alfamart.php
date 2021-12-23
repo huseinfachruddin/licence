@@ -11,38 +11,34 @@
 	Xendit::setApiKey('xnd_production_bFCXKxdow7fRIccoLP4kptLTSdsJMwMOVxIFzCR04x8KZzNr583Kgzvf3NtMnSRD');
 	class Alfamart extends controller
 	{
-		
-		function __construct($data)
-		{
-			$this->data = $data;
-		}
-
-		public function createPayment()
+		static function createPayment($request)
 		{
 			$params = [
-			    'external_id' => $this->data->id,
-			    'retail_outlet_name' => $this->data->channel,
-			    'name' => 'user',
-			    'expected_amount' => $this->data->total,
+			    'external_id' => $request->id,
+			    'retail_outlet_name' => $request->channel,
+			    'name' => $request->user()->name,
+			    'expected_amount' => $request->total,
 			   	"expiration_date" => date('Y-m-d\TH:i:sO', strtotime('+1 days')),
 			];
 			
 			$createFPC = \Xendit\Retail::create($params);
+
 			return $createFPC;
 		}
 
-		public function checkPayment()
+		static function checkPayment($request)
 		{
-			$getFPC = \Xendit\Retail::retrieve($this->data->id);
+			$getFPC = \Xendit\Retail::retrieve($request->id);
+
 			return $getFPC;
 		}
 
-		public function updatePayment($value='')
+		static function updatePayment($request)
 		{
 			# code...
 		}
 
-		public function deletePayment($value='')
+		static function deletePayment($request)
 		{
 			# code...
 		}

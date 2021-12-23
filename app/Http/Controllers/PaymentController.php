@@ -16,16 +16,16 @@
 	 */
 	class PaymentController extends Controller
 	{
-	  	public function initializePayment($data, $value='')
+	  	static function initializePayment($channel=null)
 	  	{
-		    if($value == 'ALFAMART') return new Alfamart($data);
-		    if($value == 'INDOMART') return new Indomart($data);
-		    if($value == 'BNI') return new Bni($data);
-		    if($value == 'BCA') return new Bca($data);
-		    if($value == 'BRI') return new Bri($data);
-		    if($value == 'MANDIRI') return new Mandiri($data);
-		    if($value == 'DANA') return new Dana($data);
-		    if($value == 'LINKAJA') return new LinkAja($data);
+		    if($channel == 'ALFAMART') return new Alfamart;
+		    if($channel == 'INDOMART') return new Indomart;
+		    if($channel == 'BNI') return new Bni;
+		    if($channel == 'BCA') return new Bca;
+		    if($channel == 'BRI') return new Bri;
+		    if($channel == 'MANDIRI') return new Mandiri;
+		    if($channel == 'DANA') return new Dana;
+		    if($channel == 'LINKAJA') return new LinkAja;
 	  	}
 
 	}

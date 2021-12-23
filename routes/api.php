@@ -39,15 +39,6 @@ Route::get('/test', function(){
 
 
 // Imron
-//Xendit
-Route::get('/xendit/channel',[XenditController::class,'getChannel']);
-Route::post('/xendit/payment',[XenditController::class,'payment']);
-Route::post('/xendit/invoice',[XenditController::class,'invoice']);
-Route::post('/xendit/callback',[XenditController::class,'paid']);
-
-
-
-
 
 // CHECK LICENCE 
 Route::match(['get','post'],'/checking', [LicenceController::class,'checkLicence']);
@@ -125,17 +116,18 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     Route::post('/cart',[CartController::class,'createCart']);
     Route::delete('/cart/subcart/{id}',[CartController::class,'deleteSubcart']);
     
-    //Xendit
-    Route::get('/xendit/channel',[XenditController::class,'getChannel']);
-    Route::post('/xendit/payment',[XenditController::class,'payment']);
-    Route::post('/xendit/invoice',[XenditController::class,'invoice']);
-    
     //Channel
     Route::get('/channel',[ChannelController::class,'getChannel']);
     Route::post('/channel',[ChannelController::class,'createChannel']);
     Route::put('/channel/queue',[ChannelController::class,'queueChannel']);
     Route::put('/channel/{id}',[ChannelController::class,'editChannel']);
     Route::delete('/channel/{id}',[ChannelController::class,'deleteChannel']);
+
+    //Xendit
+    Route::get('/xendit/channel',[XenditController::class,'getChannel']);
+    Route::post('/xendit/payment',[XenditController::class,'createPayment']);
+    Route::post('/xendit/invoice',[XenditController::class,'getInvoice']);
+    Route::post('/xendit/callback',[XenditController::class,'paid']);
     
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/admin',function(Request $request){

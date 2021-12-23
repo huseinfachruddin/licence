@@ -11,54 +11,48 @@ Xendit::setApiKey('xnd_production_bFCXKxdow7fRIccoLP4kptLTSdsJMwMOVxIFzCR04x8KZz
 class XenditController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->payment = new PaymentController();
-    }
-  
-    public function getChannel(){
-
-        $data = \Xendit\PaymentChannels::list();
-
-        $response = [
-            'success'   => true,
-            'xendit'      => $data,
-        ];
-        return response($response,200);
-    }
-
-    public function payment(Request $request){
-
-
+    public function createPayment(Request $request){
         $request->validate([
             'id'  =>'required',
             'channel'  =>'required',
             'total'  =>'required',
         ]);
 
-        // made by imron
-            $data = $this->payment->initializePayment($request, $request->channel)->createPayment();
-            return response($data,200);
-        // end
+        $data = PaymentController::initializePayment($request->channel)->createPayment($request);
 
+        if ($data['id']) {
+            $order = Order::find($request->id);
+            $order->paid_code=$data['id'];
+            $order->status='menunggu pembayaran';
+            $order->method=$request->channel;
+            $order->save();
+        }
         $response = [
             'success'   => true,
-            'order'     =>$data,
-            'xendit'    => $createFPC,
+            'xendit'     =>$data,
+            'order' =>$order
         ];
         return response($response,200);
     }
 
-    public function invoice(Request $request){
+    public function getInvoice(Request $request){
         $request->validate([
             'id'  =>'required',
             'channel' => 'required'
         ]);
-
-       // made by imron
-            $data = $this->payment->initializePayment($request, $request->channel)->checkPayment();
-            return response($data,200);
-        // end
+            $data = PaymentController::initializePayment($request->channel)->checkPayment($request);
+            if ($data['external_id']) {
+                $order = Order::find($data['external_id']);
+                $order->paid_code=$data['id'];
+                $order->status='menunggu pembayaran';
+                $order->save();
+            }
+            $response = [
+                'success'   => true,
+                'xendit'     =>$data,
+                'order'     =>$order,
+            ];
+            return response($response,200);
     }
 
     public function paid(Request $request){
