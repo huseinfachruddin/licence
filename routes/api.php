@@ -36,6 +36,17 @@ Route::get('/test', function(){
     return $user;
 });
 
+
+// Imron
+//Xendit
+Route::get('/xendit/channel',[XenditController::class,'getChannel']);
+Route::post('/xendit/payment',[XenditController::class,'payment']);
+Route::post('/xendit/invoice',[XenditController::class,'invoice']);
+
+
+
+
+
 // CHECK LICENCE 
 Route::match(['get','post'],'/checking', [LicenceController::class,'checkLicence']);
 Route::match(['get','post'],'/setting', [LicenceController::class,'setLicence']);
@@ -100,10 +111,10 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     Route::post('/cart',[CartController::class,'createCart']);
     Route::delete('/cart/subcart/{id}',[CartController::class,'deleteSubcart']);
     
-    //Xendit
-    Route::get('/xendit/channel',[XenditController::class,'getChannel']);
-    Route::post('/xendit/payment',[XenditController::class,'payment']);
-    Route::post('/xendit/invoice',[XenditController::class,'invoice']);
+    // //Xendit
+    // Route::get('/xendit/channel',[XenditController::class,'getChannel']);
+    // Route::post('/xendit/payment',[XenditController::class,'payment']);
+    // Route::post('/xendit/invoice',[XenditController::class,'invoice']);
 
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/admin',function(Request $request){

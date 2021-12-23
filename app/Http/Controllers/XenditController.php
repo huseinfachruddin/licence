@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\PaymentController;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Licence;
@@ -21,26 +21,22 @@ class XenditController extends Controller
         ];
         return response($response,200);
     }
+
     public function payment(Request $request){
+
+
         $request->validate([
             'id'  =>'required',
             'channel'  =>'required',
             'total'  =>'required',
         ]);
 
-        $params = [
-            'external_id' => (string)$request->id,
-            'retail_outlet_name' => $request->channel,
-            'name' => $request->user()->name,
-            'expected_amount' => $request->total
-        ];
-
-        $createFPC = \Xendit\Retail::create($params);
-
-        $data = Order::find($request->id); 
-        $data->paid_code = $createFPC['id'];
-        $data->status = "menunggu pembayaran";
-        $data->save();
+        // made by imron
+            $payment = new PaymentController();
+            $init = $payment->initializePayment($request, $request->channel);
+            $result = $init->createPayment();
+            return response($result,200);
+        // end
 
         $response = [
             'success'   => true,
@@ -53,15 +49,15 @@ class XenditController extends Controller
     public function invoice(Request $request){
         $request->validate([
             'id'  =>'required',
+            'channel' => 'required'
         ]);
 
-        $data = Order::find($request->id);
-        $data = \Xendit\Retail::retrieve((string)$data->paid_code);
-        $response = [
-            'success'   => true,
-            'xendit'    => $data,
-        ];
-        return response($response,200);
+       // made by imron
+            $payment = new PaymentController();
+            $init = $payment->initializePayment($request, $request->channel);
+            $result = $init->checkPayment();
+            return response($result,200);
+        // end
     }
 
     public function paid(Request $request){
