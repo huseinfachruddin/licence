@@ -11,35 +11,30 @@
 	Xendit::setApiKey('xnd_production_bFCXKxdow7fRIccoLP4kptLTSdsJMwMOVxIFzCR04x8KZzNr583Kgzvf3NtMnSRD');
 	class Indomart extends controller
 	{
-		
-		function __construct($data)
-		{
-			$this->data = $data;
-		}
 
-		public function createPayment()
+		static function createPayment($request)
 		{
 			$params = [
-			    'external_id' => $this->data->id,
-			    'retail_outlet_name' => $this->data->channel,
-			    'name' => 'user',
-			    'expected_amount' => $this->data->total
+			    'external_id' => $request->id,
+			    'retail_outlet_name' => $request->channel,
+			    'name' => $request->user()->name,
+			    'expected_amount' => $request->total
 			];
 			$createFPC = \Xendit\Retail::create($params);
 			return $createFPC;
 		}
 
-		public function checkPayment($value='')
+		static function checkPayment($value='')
 		{
 			# code...
 		}
 
-		public function updatePayment($value='')
+		static function updatePayment($value='')
 		{
 			# code...
 		}
 
-		public function deletePayment($value='')
+		static function deletePayment($value='')
 		{
 			# code...
 		}

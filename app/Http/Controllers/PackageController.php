@@ -8,7 +8,7 @@ use App\Models\Package;
 class PackageController extends Controller
 {
     public function getPackage(Request $request){
-        $data = Package::where('product_id',$request->product_id)->get();
+        $data = Package::where('product_id',$request->product_id)->orderBy('id', 'DESC')->get();
         $response = [
             'success'   => true,
             'package'     => $data,

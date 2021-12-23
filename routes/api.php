@@ -17,8 +17,9 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\XenditController;
-
-
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\TransferController;
+use App\Http\Controllers\ChannelController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,15 +39,6 @@ Route::get('/test', function(){
 
 
 // Imron
-//Xendit
-Route::get('/xendit/channel',[XenditController::class,'getChannel']);
-Route::post('/xendit/payment',[XenditController::class,'payment']);
-Route::post('/xendit/invoice',[XenditController::class,'invoice']);
-Route::post('/xendit/callback',[XenditController::class,'paid']);
-
-
-
-
 
 // CHECK LICENCE 
 Route::match(['get','post'],'/checking', [LicenceController::class,'checkLicence']);
@@ -69,6 +61,18 @@ Route::post('/package',[PackageController::class,'createPackage']);
 Route::put('/package',[PackageController::class,'editPackage']);
 Route::delete('/package/{id}',[PackageController::class,'deletePackage']);
 
+//Transfer
+Route::get('/transfer',[TransferController::class,'getTransfer']);
+Route::post('/transfer',[TransferController::class,'createTransfer']);
+Route::put('/transfer/{id}',[TransferController::class,'detailTransfer']);
+Route::delete('/transfer/{id}',[TransferController::class,'deleteTransfer']);
+
+//Account
+Route::get('/account',[AccountController::class,'getAccount']);
+Route::post('/account',[AccountController::class,'createAccount']);
+Route::put('/account/{id}',[AccountController::class,'editAccount']);
+Route::delete('/account/{id}',[AccountController::class,'deleteAccount']);
+
 
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);
@@ -80,8 +84,8 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     // Order
     Route::get('/order',[OrderController::class,'getOrder']);
     Route::get('/order/{id}',[OrderController::class,'detailOrder']);
+    Route::put('/order/{id}',[OrderController::class,'editOrder']);
     Route::post('/order',[OrderController::class,'createOrder']);
-    Route::put('/order',[OrderController::class,'editOrder']);
     Route::delete('/order/{id}',[OrderController::class,'deleteOrder']);
     
     // Profile
@@ -99,24 +103,32 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     Route::post('/role',[RoleController::class,'createRole']);
     Route::put('/role/{id}',[RoleController::class,'editRole']);
     Route::delete('/role/{id}',[RoleController::class,'deleteRole']);
-
+    
     // Licence
     Route::get('/licence',[LicenceController::class,'getLicence']);
     Route::get('/licence/{id}',[LicenceController::class,'detailLicence']);
     Route::post('/licence',[LicenceController::class,'createLicence']);
     Route::put('/licence/{id}',[LicenceController::class,'editLicence']);
     Route::delete('/licence/{id}',[LicenceController::class,'deleteLicence']);
-
+    
     // Cart
     Route::get('/cart',[CartController::class,'getCart']);
     Route::post('/cart',[CartController::class,'createCart']);
     Route::delete('/cart/subcart/{id}',[CartController::class,'deleteSubcart']);
     
-    // //Xendit
-    // Route::get('/xendit/channel',[XenditController::class,'getChannel']);
-    // Route::post('/xendit/payment',[XenditController::class,'payment']);
-    // Route::post('/xendit/invoice',[XenditController::class,'invoice']);
+    //Channel
+    Route::get('/channel',[ChannelController::class,'getChannel']);
+    Route::post('/channel',[ChannelController::class,'createChannel']);
+    Route::put('/channel/queue',[ChannelController::class,'queueChannel']);
+    Route::put('/channel/{id}',[ChannelController::class,'editChannel']);
+    Route::delete('/channel/{id}',[ChannelController::class,'deleteChannel']);
 
+    //Xendit
+    Route::get('/xendit/channel',[XenditController::class,'getChannel']);
+    Route::post('/xendit/payment',[XenditController::class,'createPayment']);
+    Route::post('/xendit/invoice',[XenditController::class,'getInvoice']);
+    Route::post('/xendit/callback',[XenditController::class,'paid']);
+    
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/admin',function(Request $request){
             return 'Ok';

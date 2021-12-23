@@ -9,9 +9,9 @@ class ProductController extends Controller
 {
     public function getProduct(Request $request){
         if ($request->all==true) {
-            $data = Product::all();
+            $data = Product::orderBy('id', 'DESC')->all();
         }else{
-            $data = Product::paginate(10);
+            $data = Product::orderBy('id', 'DESC')->paginate(10);
         }
         $response = [
             'success'   => true,
@@ -41,6 +41,7 @@ class ProductController extends Controller
         $data->code = $request->code;
         $data->name = $request->name;
         $data->desc = $request->desc;
+        $data->link = $request->link;
         $data->save();
         
         $response = [
@@ -62,6 +63,7 @@ class ProductController extends Controller
         $data->code = $request->code;
         $data->name = $request->name;
         $data->desc = $request->desc;
+        $data->link = $request->link;
         $data->save();
 
         $response = [

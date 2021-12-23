@@ -11,24 +11,18 @@
 	Xendit::setApiKey('xnd_production_bFCXKxdow7fRIccoLP4kptLTSdsJMwMOVxIFzCR04x8KZzNr583Kgzvf3NtMnSRD');
 	class Dana extends controller
 	{
-		
-		function __construct($data)
-		{
-			$this->data = $data;
-		}
 
-		public function createPayment()
+		static function createPayment($request)
 		{
-			$id = $this->data->id;
 			$ewalletChargeParams = [
-			    'reference_id' => "{$id}",
+			    'reference_id' => (string)$request->id,
 			    'currency' => 'IDR',
-			    'amount' => intval($this->data->total),
+			    'amount' => (int)$request->total,
 			    'checkout_method' => 'ONE_TIME_PAYMENT',
-			    'channel_code' => "ID_{$this->data->channel}",
+			    'channel_code' => "ID_".(string)$request->channel,
 			    'channel_properties' => [
-			        'success_redirect_url' => 'http://localhost:8080',
-			        'mobile_number' => $this->data->phone
+			        'success_redirect_url' => (string)$request->redirect,
+			        'mobile_number' => $request->user()->phone
 			    ],
 			    'metadata' => [
 			        'meta' => 'data'
@@ -39,9 +33,9 @@
 			return $createEWalletCharge;
 		}
 
-		public function checkPayment()
+		static function checkPayment($request)
 		{
-			$charge_id = $this->data->id;
+			$charge_id = $request->id;
 			$getEWalletChargeStatus = \Xendit\EWallets::getEWalletChargeStatus($charge_id, []);
 			return $getEWalletChargeStatus;
 		}

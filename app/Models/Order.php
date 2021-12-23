@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Suborder;
+use App\Models\Transfer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
@@ -22,5 +23,10 @@ class Order extends Model
     public function suborder()
     {
         return $this->hasMany(Suborder::class,'order_id');
+    }
+
+    public function transfer()
+    {
+        return $this->hasMany(Transfer::class,'order_id');
     }
 }

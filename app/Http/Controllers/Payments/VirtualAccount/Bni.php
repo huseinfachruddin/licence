@@ -5,45 +5,39 @@
 	use Illuminate\Http\Request;
 
 	use Xendit\Xendit;
-	/**
-	 * 
-	 */
+
 	Xendit::setApiKey('xnd_production_bFCXKxdow7fRIccoLP4kptLTSdsJMwMOVxIFzCR04x8KZzNr583Kgzvf3NtMnSRD');
 	class Bni extends controller
 	{
 		
-		function __construct($data)
-		{
-			$this->data = $data;
-		}
 
-		public function createPayment()
+		static function createPayment($request)
 		{
 			$params = [
 			   	"is_closed" => true,
-				"external_id" => $this->data->id,
-			   	"bank_code" => $this->data->channel,
+				"external_id" => $request->id,
+			   	"bank_code" => $request->channel,
 			   	"name" => "user",
 			   	"expiration_date" => date('Y-m-d\TH:i:sO', strtotime('+1 days')),
-         		"expected_amount" => $this->data->total,
+         		"expected_amount" => $request->total,
 			];
 
 			$createVA = \Xendit\VirtualAccounts::create($params);
 			return $createVA;
 		}
 
-		public function checkPayment($value='')
+		static function checkPayment($request)
 		{
-			$getVA = \Xendit\VirtualAccounts::retrieve($this->data->id, []);
+			$getVA = \Xendit\VirtualAccounts::retrieve($request->id, []);
 			return $getVA;
 		}
 
-		public function updatePayment($value='')
+		static function updatePayment($request)
 		{
 			# code...
 		}
 
-		public function deletePayment($value='')
+		static function deletePayment($request)
 		{
 			# code...
 		}
