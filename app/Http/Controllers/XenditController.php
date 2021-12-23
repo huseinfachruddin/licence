@@ -10,6 +10,11 @@ Xendit::setApiKey('xnd_production_bFCXKxdow7fRIccoLP4kptLTSdsJMwMOVxIFzCR04x8KZz
 
 class XenditController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->payment = new PaymentController();
+    }
   
     public function getChannel(){
 
@@ -32,10 +37,8 @@ class XenditController extends Controller
         ]);
 
         // made by imron
-            $payment = new PaymentController();
-            $init = $payment->initializePayment($request, $request->channel);
-            $result = $init->createPayment();
-            return response($result,200);
+            $data = $this->payment->initializePayment($request, $request->channel)->createPayment();
+            return response($data,200);
         // end
 
         $response = [
@@ -53,16 +56,21 @@ class XenditController extends Controller
         ]);
 
        // made by imron
-            $payment = new PaymentController();
-            $init = $payment->initializePayment($request, $request->channel);
-            $result = $init->checkPayment();
-            return response($result,200);
+            $data = $this->payment->initializePayment($request, $request->channel)->checkPayment();
+            return response($data,200);
         // end
     }
 
     public function paid(Request $request){
 
-        $order = Order::with('user','suborder.package.product')->where('paid_code',$request->id)->first();
+        // get data post
+            $id = '';
+            $data = json_decode(file_get_contents('php://input'),true); 
+            if(isset($data['id'])) $id = $data['external_id'];
+            if(!isset($data['id'])) $id = $data['data']['external_id'];
+        // end
+
+        $order = Order::with('user','suborder.package.product')->where('id',$id)->first();
         $order = Order::find($order->id);
         $order->status = 'sudah dibayar';
         foreach ($order->suborder as $key => $value) {
