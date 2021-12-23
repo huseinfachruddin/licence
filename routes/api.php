@@ -70,12 +70,6 @@ Route::post('/account',[AccountController::class,'createAccount']);
 Route::put('/account/{id}',[AccountController::class,'editAccount']);
 Route::delete('/account/{id}',[AccountController::class,'deleteAccount']);
 
-//Channel
-Route::get('/channel',[ChannelController::class,'getChannel']);
-Route::post('/channel',[ChannelController::class,'createChannel']);
-Route::put('/channel/queue',[ChannelController::class,'queueChannel']);
-Route::put('/channel/{id}',[ChannelController::class,'editChannel']);
-Route::delete('/channel/{id}',[ChannelController::class,'deleteChannel']);
 
 Route::post('/register',[Auth::class,'register']);
 Route::post('/login',[Auth::class,'login']);
@@ -106,14 +100,14 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     Route::post('/role',[RoleController::class,'createRole']);
     Route::put('/role/{id}',[RoleController::class,'editRole']);
     Route::delete('/role/{id}',[RoleController::class,'deleteRole']);
-
+    
     // Licence
     Route::get('/licence',[LicenceController::class,'getLicence']);
     Route::get('/licence/{id}',[LicenceController::class,'detailLicence']);
     Route::post('/licence',[LicenceController::class,'createLicence']);
     Route::put('/licence/{id}',[LicenceController::class,'editLicence']);
     Route::delete('/licence/{id}',[LicenceController::class,'deleteLicence']);
-
+    
     // Cart
     Route::get('/cart',[CartController::class,'getCart']);
     Route::post('/cart',[CartController::class,'createCart']);
@@ -123,7 +117,14 @@ Route::group(['middleware'=>'auth:sanctum'],function(){
     Route::get('/xendit/channel',[XenditController::class,'getChannel']);
     Route::post('/xendit/payment',[XenditController::class,'payment']);
     Route::post('/xendit/invoice',[XenditController::class,'invoice']);
-
+    
+    //Channel
+    Route::get('/channel',[ChannelController::class,'getChannel']);
+    Route::post('/channel',[ChannelController::class,'createChannel']);
+    Route::put('/channel/queue',[ChannelController::class,'queueChannel']);
+    Route::put('/channel/{id}',[ChannelController::class,'editChannel']);
+    Route::delete('/channel/{id}',[ChannelController::class,'deleteChannel']);
+    
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/admin',function(Request $request){
             return 'Ok';
