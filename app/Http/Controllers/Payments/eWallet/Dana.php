@@ -46,14 +46,12 @@
 			return $getEWalletChargeStatus;
 		}
 
-		public function updatePayment($value='')
+		public function updatePayment()
 		{
-			# code...
 		}
 
-		public function deletePayment($value='')
+		public function deletePayment()
 		{
-			# code...
 		}
 
 	}

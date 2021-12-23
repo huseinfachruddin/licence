@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Licence;
 use Xendit\Xendit;
+
 Xendit::setApiKey('xnd_production_bFCXKxdow7fRIccoLP4kptLTSdsJMwMOVxIFzCR04x8KZzNr583Kgzvf3NtMnSRD');
 
 class XenditController extends Controller
@@ -14,6 +15,8 @@ class XenditController extends Controller
     public function __construct()
     {
         $this->payment = new PaymentController();
+        $this->url = 'http://localhost:5000/wa/send-bulk';
+        $this->client = new \GuzzleHttp\Client();
     }
   
     public function getChannel(){
@@ -37,8 +40,10 @@ class XenditController extends Controller
         ]);
 
         // made by imron
-            $data = $this->payment->initializePayment($request, $request->channel)->createPayment();
-            return response($data,200);
+
+            $data["createPayment"] = $this->payment->initializePayment($request, $request->channel)->createPayment();
+            $data['postData'] = $this->client->request('POST', $this->url, ["json" => ["contact" => '6285882843337', "message" => "halo test wa dan lisensi"]]);
+            return response($data, 200);
         // end
 
         $response = [
@@ -68,6 +73,10 @@ class XenditController extends Controller
             $data = json_decode(file_get_contents('php://input'),true); 
             if(isset($data['id'])) $id = $data['external_id'];
             if(!isset($data['id'])) $id = $data['data']['external_id'];
+        // end
+
+        // wa
+            $data['postData'] = $this->client->request('POST', $this->url, ["json" => ["contact" => '6285882843337', "message" => "halo test wa dan lisensi"]]);
         // end
 
         $order = Order::with('user','suborder.package.product')->where('id',$id)->first();
